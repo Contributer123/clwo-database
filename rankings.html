@@ -50,10 +50,10 @@
               <span class="center light-blue-text">
                 <i class="material-icons">trending_up</i>
               </span>
-              <span>Top Traitor</span>
+              <span>TTT</span>
             </h5>          
 
-            <ul class="collection" id="most_killed_ranking">
+            <ul class="collection" id="ranking_ttt">
             </ul>
             
               </div>
@@ -63,12 +63,12 @@
           <div class="icon-block">
             <h5 class="center">
               <span class="center light-blue-text">
-                <i class="material-icons">search</i>
+                <i class="material-icons">trending_up</i>
               </span>
-              <span>Scanned bodies</span>
+              <span>AIM 1vs1</span>
             </h5>      
             
-            <ul class="collection" id="identified_bodies_ranking">
+            <ul class="collection" id="ranking_aim">
             </ul>
 
           </div>
@@ -124,6 +124,35 @@
   star_target.style.fontSize = rank_size;
 }
   
+  function create_ranking(api_data, server_name, html_id, limit_ranking_to_top_number)
+  {
+  
+      let parsed_data = JSON.parse(api_data.data);
+      init_ranking(server_name, parsed_data.length, limit_ranking_to_top_number);
+
+      let rank = 0;
+      parsed_data.forEach(function(map_info){
+      
+        if(rank > limit_ranking_to_top_number)
+          return;
+        if(map_info.ShortName == server_name)
+        {
+          let target = document.getElementById(html_id).children[rank];
+          target.children[0].src = "";
+          target.children[1].children[0].innerText = map_info.MapDisplayName;
+          target.children[1].children[0].href = "";          
+          target.children[2].innerHTML = " Playtime in Hours: <br/>" + map_info.PlayTime;
+          style_star(target.children[3].children[0], rank);
+          rank++;
+        }
+        debugger;
+      });
+  
+  
+  }
+  
+  
+  
   function init_ranking(target_id, number_of_players, limit)
 {
   let content = '<li class="collection-item avatar"> <img src="" alt="" class="circle"> <span class="title"><a href=""></a></span> <p><b></b><br/> </p> <a href="#!" class="secondary-content"><i class="material-icons text-darken-1">grade</i></a> </li>';
@@ -137,24 +166,14 @@
   let request_url = "http://35.156.40.228/api/v1/rankings_raw.php";
   fetch(request_url).then(function(response) { return response.json();}).then(
         function(api_data) {
-          console.log(api_data);
-          let parsed_data = JSON.parse(api_data.data);
-          init_ranking("ranking_jailbreak", parsed_data.length, parsed_data.length);
+        
+        create_ranking(api_data, "Jailbreak", "ranking_jailbreak", 25);
+        create_ranking(api_data, "TTT", "ranking_ttt", 25);
+        create_ranking(api_data, "1vs1 Arena", "ranking_aim", 25);
 
-          let rank = 0;
-          parsed_data.forEach(function(map_info){
-            let target = document.getElementById('ranking_jailbreak').children[rank];
-            target.children[0].src = "";
-            target.children[1].children[0].innerText = map_info.MapDisplayName;
-            target.children[1].children[0].href = "";          
-            target.children[2].innerHTML = " Playtime in Hours: <br/>" + map_info.PlayTime;
-            style_star(target.children[3].children[0], rank);
-
-            rank++;
-            debugger;
-          });
-          
         });
   </script>
+
+  
   </body>
 </html>
