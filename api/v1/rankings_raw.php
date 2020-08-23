@@ -6,7 +6,7 @@ error_reporting(~0);
 
 $conn = mysqli_connect("localhost", "root", "!CLWOSafe123", "clwo_server");
 $req = [];
-$req["params"] = $_POST;
+$req["params"] = $_GET;
 if (!$conn) {
   $req["succeeded"] = false;
   $req["error"] = "Debug-Fehlernummer: " . mysqli_connect_errno() . mysqli_connect_error();
