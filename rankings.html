@@ -155,21 +155,6 @@
             debugger;
           });
           
-
-          let profile_url = api_data.SteamData.profileurl;        
-          let personname = ">" +api_data.SteamData.personaname;
-          // Limit long names to keep formatting alive 
-          personname = personname.substr(0, 25);
-          let avatar_url = api_data.SteamData.avatarmedium;
-          
-          let target = document.getElementById('most_killed_traitor').children[rank];
-          target.children[0].src = avatar_url;
-          target.children[1].children[0].innerText = personname;
-          target.children[1].children[0].href = profile_url;          
-          target.children[2].innerHTML = killed_traitors + " Traitors killed<br/>" + freekills + " RDM";
-
-          // Give Star color depending on rank
-          style_star(target.children[3].children[0], rank);*/
         });
   </script>
   </body>
