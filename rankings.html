@@ -18,10 +18,18 @@
 <body class="lighten-5">
   <div class="section blue lighten-5" id="index-banner">
     <div class="container">
-      <h1 class="header center blue-text">Map Rankings </h1>
+      <h1 class="header center blue-text">Map Rankings</h1>
+      <div class="row center">
+        <a class="waves-effect waves-light btn-large" href="?days=1">Show Last 24 hours Days</a>
+        <a class="waves-effect waves-light btn-large" href="?days=7">Show Last 7 Days</a>
+        <a class="waves-effect waves-light btn-large" href="?days=30">Show Last 30 Days</a>      
+        <a class="waves-effect waves-light btn-large" href="?days=9999">Show Total Days</a>      
+      </div>
+
     </div>
   </div>
-
+  
+  
 
   <div class="blue lighten-5">
     <div class="container section">
@@ -123,6 +131,23 @@
   star_target.classList.add(star_color);
   star_target.style.fontSize = rank_size;
 }
+
+function get_days_from_url()
+{
+  let url_string = window.location.href;
+  let url = new URL(url_string);
+  let days = url.searchParams.get("days");  
+  days = parseInt(days);
+  if(days > 0 && days < 101)
+  {
+      return days;
+  }
+  else
+  {
+      return 7; // Default value 7 days
+  }
+}
+
   
   function create_ranking(parsed_data, server_name, html_id, limit_ranking_to_top_number)
   {
