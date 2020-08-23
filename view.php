@@ -166,7 +166,7 @@ $sql = "SELECT MapDisplayName FROM `snapshots` GROUP BY MapDisplayName";
 
 // Do one big SQL Query instead of many small ones 
 
-$big_sql_req = "SELECT ClientCount, EntryTime, MapDisplayName FROM `snapshots` ORDER BY `ServerID` ASC, `EntryTime` DESC, `MapDisplayName` DESC";
+$big_sql_req = "SELECT ClientCount, EntryTime, MapDisplayName FROM `snapshots` WHERE EntryTime > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 10080 minute) ORDER BY `ServerID` ASC, `EntryTime` DESC, `MapDisplayName` DESC";
 
 
 $starttime= round(microtime(true) * 1000);
