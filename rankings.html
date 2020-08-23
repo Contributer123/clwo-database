@@ -128,7 +128,7 @@
   {
   
       let parsed_data = JSON.parse(api_data.data);
-      init_ranking(server_name, parsed_data.length, limit_ranking_to_top_number);
+      init_ranking(html_id, parsed_data.length, limit_ranking_to_top_number);
 
       let rank = 0;
       parsed_data.forEach(function(map_info){
@@ -145,7 +145,6 @@
           style_star(target.children[3].children[0], rank);
           rank++;
         }
-        debugger;
       });
   
   
