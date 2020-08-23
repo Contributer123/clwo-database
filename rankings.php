@@ -81,3 +81,4 @@ foreach($request_states_sixty->fetch_all() as $requests_info){
   echo "Playtime : <b>".$playtime."%</b></div>";
   
 }
+?>
