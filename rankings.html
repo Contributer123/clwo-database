@@ -126,7 +126,6 @@
   
   function create_ranking(parsed_data, server_name, html_id, limit_ranking_to_top_number)
   {
-        init_ranking(html_id, parsed_data.length, limit_ranking_to_top_number);
 
       let rank = 0;
       parsed_data.forEach(function(map_info){
@@ -135,6 +134,7 @@
           return;
         if(map_info.ShortName == server_name)
         {
+          init_ranking(html_id, 1);
           let target = document.getElementById(html_id).children[rank];
           target.children[0].src = "https://image.gametracker.com/images/maps/160x120/csgo/" + map_info.MapDisplayName + ".jpg";
           target.children[1].children[0].innerText = map_info.MapDisplayName.substr(0, 19);
@@ -150,11 +150,11 @@
   
   
   
-  function init_ranking(target_id, number_of_players, limit)
+  function init_ranking(target_id, number_of_players)
 {
   let content = '<li class="collection-item avatar"> <img src="" alt="" class="circle"> <span class="title"><a href=""></a></span> <p><b></b><br/> </p> <a href="#!" class="secondary-content"><i class="material-icons text-darken-1">grade</i></a> </li>';
   
-    for(let i = 0; i < number_of_players && i<limit; i++)
+    for(let i = 0; i < number_of_players; i++)
     {
       document.getElementById(target_id).insertAdjacentHTML("beforeend", content);
     }
