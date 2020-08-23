@@ -18,7 +18,19 @@ if (!$conn) {
 $req["succeeded"] = true;
 $req["error"] = "";
 
-$cmd_request_state_sixty_minutes = "SELECT ShortName, MapDisplayName, COUNT(MapDisplayName) FROM `snapshots` WHERE ClientCount > 5  AND EntryTime > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1440 minute) GROUP BY MapDisplayName, ShortName HAVING COUNT(MapDisplayName) > 1 ORDER BY ShortName, COUNT(MapDisplayName) DESC";
+$days_from_url = intval($_GET["days"]);
+if($days_from_url > 0 && $days_from_url < 1000)
+{
+  
+}
+else
+{
+  $days_from_url = 7;
+}
+
+$minutes = $days_from_url * 60 * 24;
+
+$cmd_request_state_sixty_minutes = "SELECT ShortName, MapDisplayName, COUNT(MapDisplayName) FROM `snapshots` WHERE ClientCount > 5  AND EntryTime > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL ". $minutes ." minute) GROUP BY MapDisplayName, ShortName HAVING COUNT(MapDisplayName) > 1 ORDER BY ShortName, COUNT(MapDisplayName) DESC";
 $request_states_sixty = $conn->query($cmd_request_state_sixty_minutes);
 
 $map_stats = [];
