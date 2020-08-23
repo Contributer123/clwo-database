@@ -74,20 +74,6 @@
           </div>
         </div>
         
-        <div class="col xl3 l4 m6 s12">
-          <div class="icon-block">
-            <h5 class="center">
-              <span class="center light-blue-text">
-                <i class="material-icons">local_grocery_store</i>
-              </span>
-              <span>Shopping Queen</span>
-            </h5>  
-            
-             <ul class="collection" id="shopping_queen_ranking">
-            </ul>
-            
-          </div>
-        </div>
       </div>
     </div>
     <br><br>
