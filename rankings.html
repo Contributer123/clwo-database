@@ -15,8 +15,8 @@
      
      
 </head>
-<body>
-  <div class="section blue lighten-5" id="index-banner">
+<body class="lighten-5">
+  <div class="container section blue lighten-5" id="index-banner">
     <div class="container">
       <h1 class="header center blue-text">Map Rankings </h1>
     </div>
@@ -139,7 +139,7 @@
         {
           let target = document.getElementById(html_id).children[rank];
           target.children[0].src = "https://image.gametracker.com/images/maps/160x120/csgo/" + map_info.MapDisplayName + ".jpg";
-          target.children[1].children[0].innerText = map_info.MapDisplayName;
+          target.children[1].children[0].innerText = map_info.MapDisplayName.substr(0, 19);
           target.children[1].children[0].href = "";          
           target.children[2].innerHTML = " Playtime in Hours: <br/>" + map_info.PlayTime;
           style_star(target.children[3].children[0], rank);
