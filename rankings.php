@@ -76,7 +76,7 @@ $request_states_sixty = $conn->query($cmd_request_state_sixty_minutes);
 
 foreach($request_states_sixty->fetch_all() as $requests_info){
  // print_r($value);// "Salary: $value<br>";
-  echo "<div style='color:green;'>ShortName: ". $requests_info[0]." MapDisplayName: ".. $requests_info[1];
+  echo "<div style='color:green;'>ShortName: ". $requests_info[0]." MapDisplayName: ". $requests_info[1];
   $playtime = round(floor((int)$requests_info[1])/ (60), 2);
   echo "Playtime : <b>".$playtime."%</b></div>";
   
