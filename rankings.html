@@ -185,7 +185,7 @@ function get_days_from_url()
     }
   }
   
-  let request_url = "http://35.156.40.228/api/v1/rankings_raw.php";
+  let request_url = "http://35.156.40.228/api/v1/rankings_raw.php?days="+ get_days_from_url();
   fetch(request_url).then(function(response) { return response.json();}).then(
         function(api_data) {
               let parsed_data = JSON.parse(api_data.data);
