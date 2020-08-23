@@ -91,7 +91,7 @@
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script>
-  let request_url = "http://35.156.40.228/api/rankings_raw.php";
+  let request_url = "http://35.156.40.228/api/v1/rankings_raw.php";
   fetch(request_url).then(function(response) { return response.json();}).then(
         function(api_data) {
           console.log(api_data);
