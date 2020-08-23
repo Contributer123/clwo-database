@@ -133,7 +133,7 @@
       let rank = 0;
       parsed_data.forEach(function(map_info){
       
-        if(rank > limit_ranking_to_top_number)
+        if(rank >= limit_ranking_to_top_number)
           return;
         if(map_info.ShortName == server_name)
         {
