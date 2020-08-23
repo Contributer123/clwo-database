@@ -138,7 +138,7 @@ function get_days_from_url()
   let url = new URL(url_string);
   let days = url.searchParams.get("days");  
   days = parseInt(days);
-  if(days > 0 && days < 101)
+  if(days > 0)
   {
       return days;
   }
