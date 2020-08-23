@@ -27,7 +27,7 @@
     <div class="section">
       <div class="row">
       
-        <div class="col xl3 l4 m6 s12">
+        <div class="col xl4 l4 m6 s12">
           <div class="icon-block">
             
             <h5 class="center">
@@ -43,7 +43,7 @@
           </div>
         </div>      
       
-        <div class="col xl3 l4 m6 s12">
+        <div class="col xl4 l4 m6 s12">
           <div class="icon-block">
           
             <h5 class="center">
@@ -59,7 +59,7 @@
               </div>
         </div>
 
-        <div class="col xl3 l4 m6 s12">
+        <div class="col xl4 l4 m6 s12">
           <div class="icon-block">
             <h5 class="center">
               <span class="center light-blue-text">
@@ -138,7 +138,7 @@
         if(map_info.ShortName == server_name)
         {
           let target = document.getElementById(html_id).children[rank];
-          target.children[0].src = "";
+          target.children[0].src = "https://image.gametracker.com/images/maps/160x120/csgo/" + map_info.MapDisplayName + ".jpg";
           target.children[1].children[0].innerText = map_info.MapDisplayName;
           target.children[1].children[0].href = "";          
           target.children[2].innerHTML = " Playtime in Hours: <br/>" + map_info.PlayTime;
