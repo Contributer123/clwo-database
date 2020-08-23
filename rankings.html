@@ -124,11 +124,9 @@
   star_target.style.fontSize = rank_size;
 }
   
-  function create_ranking(api_data, server_name, html_id, limit_ranking_to_top_number)
+  function create_ranking(parsed_data, server_name, html_id, limit_ranking_to_top_number)
   {
-  
-      let parsed_data = JSON.parse(api_data.data);
-      init_ranking(html_id, parsed_data.length, limit_ranking_to_top_number);
+        init_ranking(html_id, parsed_data.length, limit_ranking_to_top_number);
 
       let rank = 0;
       parsed_data.forEach(function(map_info){
@@ -165,10 +163,11 @@
   let request_url = "http://35.156.40.228/api/v1/rankings_raw.php";
   fetch(request_url).then(function(response) { return response.json();}).then(
         function(api_data) {
-        
-        create_ranking(api_data, "Jailbreak", "ranking_jailbreak", 25);
-        create_ranking(api_data, "TTT", "ranking_ttt", 25);
-        create_ranking(api_data, "1vs1 Arena", "ranking_aim", 25);
+              let parsed_data = JSON.parse(api_data.data);
+
+        create_ranking(parsed_data, "Jailbreak", "ranking_jailbreak", parsed_data.length);
+        create_ranking(parsed_data, "TTT", "ranking_ttt", parsed_data.length);
+        create_ranking(parsed_data, "1vs1 Arena", "ranking_aim", parsed_data.length);
 
         });
   </script>
