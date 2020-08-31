@@ -41,20 +41,8 @@ window.onload = function () {
 </head>
 
 <body>
-  <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Statistics</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="rankings.html?days=30">Playtime Ranking</a></li>
-        <li><a href="graphs.html">Player over Time per Map</a></li>
-      </ul>
-      <ul id="nav-mobile" class="sidenav">
-        <li><a href="rankings.html?days=30">Playtime Ranking</a></li>
-        <li><a href="graphs.html">Player over Time per Map</a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
-  
+  <nav-placeholder></nav-placeholder>
+
 	<div class="section blue lighten-5" id="index-banner">
     <div class="container">
       <h1 class="header center blue-text">Player over Time per Map</h1>
@@ -444,4 +432,10 @@ function group_map_data() {
 	console.log("Converting SQL data into Canvas.js readable format: " + passed_time + " milliseconds");
 	return map_data;
 }
+</script>
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script>
+$.get("navigation.html", function(data){
+    $("#nav-placeholder").replaceWith(data);
+});
 </script>

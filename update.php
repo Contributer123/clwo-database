@@ -23,9 +23,9 @@ foreach($obj['data'] as $server_info) {
 	$data['MapDisplayName'] = $server_info['MapDisplayName'];
 	
 	$data['StaffOnline'] = isset($server_info['qrd']['rules']['staff']) ?  
-$server_info['qrd']['rules']['staff'] : "";
+  $server_info['qrd']['rules']['staff'] : "";
 	$data['WardenAccountID'] = isset($server_info['qrd']['rules']['WardenAccountID']) ? 
-$server_info['qrd']['rules']['WardenAccountID'] : "";;
+  $server_info['qrd']['rules']['WardenAccountID'] : "";;
 	
 	// Now call additional API to get playerinfo of the players online
 	$player_api_url = "https://clwo.eu/jailbreak/api/v2/players.php?SID=".$data['ServerID'];

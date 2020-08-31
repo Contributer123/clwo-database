@@ -16,20 +16,8 @@
      
 </head>
 <body class="lighten-5">
-  <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Statistics</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="rankings.html?days=30">Playtime Ranking</a></li>
-        <li><a href="graphs.html">Player over Time per Map</a></li>
-      </ul>
-
-      <ul id="nav-mobile" class="sidenav">
-        <li><a href="rankings.html?days=30">Playtime Ranking</a></li>
-        <li><a href="graphs.html">Player over Time per Map</a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
+  <nav-placeholder>
+  </nav-placeholder>
   <div class="section blue lighten-5" id="index-banner">
     <div class="container">
       <h1 class="header center blue-text">Map Ranking</h1>
@@ -174,8 +162,16 @@ function get_days_from_url()
         if(map_info.ShortName == server_name)
         {
           init_ranking(html_id, 1);
+          /*
+          
+          			content += "<img style='max-width: 512px;' onerror=\"this.src='https://image.gametracker.com/images/maps/160x120/csgo/" + map_name + ".jpg';this.onerror = null;\" onclick='render_map_data(\"" + map_name+"\", " + global_map_data[map_name].length +");' id='image_container_" + map_name +"' src='images/" + map_name + ".jpg' id='preview'/>";
+          
+          */
+          
+          
           let target = document.getElementById(html_id).children[rank];
-          target.children[0].src = "https://image.gametracker.com/images/maps/160x120/csgo/" + map_info.MapDisplayName + ".jpg";
+          target.children[0].src = "images/" + map_info.MapDisplayName + ".jpg";
+          target.children[0].onerror = "";
           target.children[1].children[0].innerText = map_info.MapDisplayName.substr(0, 19);
           target.children[1].children[0].href = "";          
           target.children[2].innerHTML = " Playtime in Hours: <br/>" + map_info.PlayTime;
@@ -210,7 +206,12 @@ function get_days_from_url()
 
         });
   </script>
-
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script>
+$.get("navigation.html", function(data){
+    $("#nav-placeholder").replaceWith(data);
+});
+</script>
   
   </body>
 </html>
