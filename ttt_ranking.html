@@ -1,0 +1,377 @@
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Starter Template - Materialize</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+     
+     
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="section blue lighten-5" id="index-banner">
+    <div class="container">
+      <h1 class="header center blue-text">TTT Rankings</h1>
+      <div class="row center">
+      <!-- <h5 class="header col s12 light"></h5>       -->
+        <a class="waves-effect waves-light btn-large" href="?top=10">Show top 10</a>
+        <a class="waves-effect waves-light btn-large" href="?top=50">Show top 50</a>      
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="blue lighten-5">
+    <div class="section">
+      <div class="row">
+      
+        <div class="col xl3 l4 m6 s12">
+          <div class="icon-block">
+            
+            <h5 class="center">
+              <span class="center light-blue-text">
+                <i class="material-icons">trending_up</i>
+              </span>
+              <span>Top Hunter</span>
+            </h5>
+            
+              <ul class="collection" id="most_killed_traitor">
+              </ul>
+              
+          </div>
+        </div>      
+      
+        <div class="col xl3 l4 m6 s12">
+          <div class="icon-block">
+          
+            <h5 class="center">
+              <span class="center light-blue-text">
+                <i class="material-icons">trending_up</i>
+              </span>
+              <span>Top Traitor</span>
+            </h5>          
+
+            <ul class="collection" id="most_killed_ranking">
+            </ul>
+            
+              </div>
+        </div>
+
+        <div class="col xl3 l4 m6 s12">
+          <div class="icon-block">
+            <h5 class="center">
+              <span class="center light-blue-text">
+                <i class="material-icons">search</i>
+              </span>
+              <span>Scanned bodies</span>
+            </h5>      
+            
+            <ul class="collection" id="identified_bodies_ranking">
+            </ul>
+
+          </div>
+        </div>
+        
+        <div class="col xl3 l4 m6 s12">
+          <div class="icon-block">
+            <h5 class="center">
+              <span class="center light-blue-text">
+                <i class="material-icons">local_grocery_store</i>
+              </span>
+              <span>Shopping Queen</span>
+            </h5>  
+            
+             <ul class="collection" id="shopping_queen_ranking">
+            </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <br><br>
+  </div>
+
+  <footer class="page-footer blue">
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="https://steamcommunity.com/id/IAmFat__/" target="_blank">IAmFat</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  </body>
+</html>
+
+
+
+<script>
+  
+//https://clwo.eu/jailbreak/api/v2/accounthelper.php?AccountID=204683819  
+  
+
+let ranking_limit = get_player_limit();
+download_data("https://clwo.eu/jailbreak/api/v2/ttt_stats.php");
+
+let ranking_top_traitor = [];
+let ranking_most_identified_bodies = [];
+let ranking_shopping_queen = [];
+let ranking_most_killed_traitor = [];
+
+function download_data(url){
+ 
+  fetch(url)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(rec_data) {
+    
+  ranking_shopping_queen = rec_data.data.sort(market_compare);
+  display_shopping_queen_data();
+  
+  ranking_most_identified_bodies = rec_data.data.sort(identified_bodies_compare);
+  display_most_identified_dead_data();
+  
+  ranking_top_traitor =  rec_data.data.sort(killed_people_compare);
+  display_top_traitor_data();
+  
+  ranking_most_killed_traitor = rec_data.data.sort(killed_traitor_compare);
+  display_top_killed_traitor_data();
+    
+  });;
+}
+
+function killed_traitor_compare(p1, p2)
+{
+  return p2.killed_traitors - p1.killed_traitors;
+}
+function killed_people_compare(p1, p2)
+{
+    return (p2.killed_detectives + p2.killed_innocents) - (p1.killed_detectives + p1.killed_innocents);
+}
+
+function market_compare(p1, p2)
+{
+  return p2.bought_items - p1.bought_items;
+}
+
+function identified_bodies_compare(p1, p2)
+{
+  return p2.identified_bodies - p1.identified_bodies;
+}
+
+function init_ranking(target_id, number_of_players, limit)
+{
+  let content = '<li class="collection-item avatar"> <img src="" alt="" class="circle"> <span class="title"><a href=""></a></span> <p><b></b><br/> </p> <a href="#!" class="secondary-content"><i class="material-icons text-darken-1">grade</i></a> </li>';
+  
+  for(let i = 0; i < number_of_players && i<limit; i++)
+  {
+    document.getElementById(target_id).insertAdjacentHTML("beforeend", content);
+  }
+}
+
+
+function display_top_killed_traitor_data()
+{
+  init_ranking("most_killed_traitor", ranking_top_traitor.length, ranking_limit);
+
+  for(let i = 0; i < ranking_top_traitor.length; i++)
+  {
+      if(i > ranking_limit -1)
+        return;
+      let AccountID = ranking_top_traitor[i].AccountID;
+      let killed_traitors	 = ranking_top_traitor[i].killed_traitors;
+      let freekills = ranking_top_traitor[i].bad_kills;
+      let request_url = "https://clwo.eu/jailbreak/api/v2/accounthelper.php?AccountID=" + AccountID;
+      let rank = i;
+      
+      
+      fetch(request_url).then(function(response) { return response.json();}).then(
+        function(api_data) {
+          let profile_url = api_data.SteamData.profileurl;        
+          let personname = ">" +api_data.SteamData.personaname;
+          // Limit long names to keep formatting alive 
+          personname = personname.substr(0, 25);
+          let avatar_url = api_data.SteamData.avatarmedium;
+          
+          let target = document.getElementById('most_killed_traitor').children[rank];
+          target.children[0].src = avatar_url;
+          target.children[1].children[0].innerText = personname;
+          target.children[1].children[0].href = profile_url;          
+          target.children[2].innerHTML = killed_traitors + " Traitors killed<br/>" + freekills + " RDM";
+
+          // Give Star color depending on rank
+          style_star(target.children[3].children[0], rank);
+        });
+  }
+}
+
+function display_top_traitor_data()
+{
+  init_ranking("most_killed_ranking", ranking_top_traitor.length, ranking_limit);
+
+  for(let i = 0; i < ranking_top_traitor.length; i++)
+  {
+      if(i > ranking_limit -1)
+        return;
+      let AccountID = ranking_top_traitor[i].AccountID;
+      let killed_detectives	 = ranking_top_traitor[i].killed_detectives;
+      let killed_innocents	 = ranking_top_traitor[i].killed_innocents;
+      let freekills = ranking_top_traitor[i].bad_kills;
+      let request_url = "https://clwo.eu/jailbreak/api/v2/accounthelper.php?AccountID=" + AccountID;
+      let rank = i;
+      
+      
+      fetch(request_url).then(function(response) { return response.json();}).then(
+        function(api_data) {
+          let profile_url = api_data.SteamData.profileurl;        
+          let personname = ">" +api_data.SteamData.personaname;
+          // Limit long names to keep formatting alive 
+          personname = personname.substr(0, 25);
+          let avatar_url = api_data.SteamData.avatarmedium;
+          
+          let target = document.getElementById('most_killed_ranking').children[rank];
+          target.children[0].src = avatar_url;
+          target.children[1].children[0].innerText = personname;
+          target.children[1].children[0].href = profile_url;
+          target.children[2].innerHTML = killed_detectives + " Detectives killed <br/>" + killed_innocents + " Innocents killed";
+
+          // Give Star color depending on rank
+          style_star(target.children[3].children[0], rank);
+        });
+  }
+}
+
+function display_shopping_queen_data()
+{
+  init_ranking("shopping_queen_ranking", ranking_shopping_queen.length, ranking_limit);
+  for(let i = 0; i < ranking_shopping_queen.length; i++)
+  {
+      if(i > ranking_limit -1)
+        return;
+      let AccountID = ranking_shopping_queen[i].AccountID;
+      let bought_items = ranking_shopping_queen[i].bought_items;
+      let scanned_bodies = ranking_shopping_queen[i].scanned_bodies;
+      let hit_ratio = Math.round(100*ranking_shopping_queen[i].scanned_traitors /  (ranking_shopping_queen[i].scanned_bodies));
+      let request_url = "https://clwo.eu/jailbreak/api/v2/accounthelper.php?AccountID=" + AccountID;
+      let rank = i;
+      
+      fetch(request_url).then(function(response) { return response.json();}).then(
+        function(api_data) {
+          let profile_url = api_data.SteamData.profileurl;
+          let personname = ">" +api_data.SteamData.personaname;
+          // Limit long names to keep formatting alive 
+          personname = personname.substr(0, 25);
+          let avatar_url = api_data.SteamData.avatarmedium;          
+          let target = document.getElementById('shopping_queen_ranking').children[rank];
+          target.children[0].src = avatar_url;
+          target.children[1].children[0].innerText = personname;
+          target.children[1].children[0].href = profile_url;
+          target.children[2].innerHTML = bought_items + " Items bought <br/>" + hit_ratio + "% Traitor tase rate";
+
+          // Give Star color depending on rank
+          style_star(target.children[3].children[0], rank);
+        });
+  }
+}
+
+function display_most_identified_dead_data()
+{
+    init_ranking("identified_bodies_ranking", ranking_shopping_queen.length, ranking_limit);
+
+  for(let i = 0; i < ranking_most_identified_bodies.length; i++)
+  {
+      if(i > ranking_limit -1)
+        return;
+      let AccountID = ranking_most_identified_bodies[i].AccountID;
+      let identified_bodies	 = ranking_most_identified_bodies[i].identified_bodies	;
+      let identified_traitors = ranking_most_identified_bodies[i].identified_traitors;
+      let request_url = "https://clwo.eu/jailbreak/api/v2/accounthelper.php?AccountID=" + AccountID;
+      let rank = i;
+      
+      fetch(request_url).then(function(response) { return response.json();}).then(
+        function(api_data) {
+          let profile_url = api_data.SteamData.profileurl;        
+          let personname = ">" + api_data.SteamData.personaname;
+          // Limit long names to keep formatting alive 
+          personname = personname.substr(0, 25);
+          let avatar_url = api_data.SteamData.avatarmedium;
+          
+          let target = document.getElementById('identified_bodies_ranking').children[rank];
+          target.children[0].src = avatar_url;
+          target.children[1].children[0].innerText = personname;
+          target.children[1].children[0].href = profile_url;          
+          target.children[2].innerHTML = identified_bodies + " identified <br/>" + identified_traitors + " were Traitor";
+
+          // Give Star color depending on rank
+          style_star(target.children[3].children[0], rank);
+        });
+  }
+}
+
+function style_star(star_target, rank)
+{
+  let star_color = "black-text";
+  let rank_size = "20px";
+  rank = parseInt(rank);
+  if(rank <= 0)
+  {
+    star_color = "yellow-text";
+    rank_size = "35px";
+  }
+  else if(rank == 1)
+  {
+    star_color = "grey-text";
+    rank_size = "30px";
+  }
+  else if(rank == 2)
+  {
+    star_color = "amber-text";
+    rank_size = "25px";
+  }
+  else
+  {
+    star_color = "transparent-text";
+    rank_size = "20px";
+  }
+  
+  star_target.classList.add(star_color);
+  star_target.style.fontSize = rank_size;
+}
+
+function get_player_limit()
+{
+  let url_string = window.location.href;
+  let url = new URL(url_string);
+  let top = url.searchParams.get("top");  
+  top = parseInt(top);
+  if(top > 0 && top < 101)
+  {
+      return top;
+  }
+  else
+  {
+      return 10; // Default value 10 people
+  }
+}
+
+  </script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  
+  <script>
+  $.get("navigation.html", function(data){
+      $("#nav-placeholder").replaceWith(data);
+  });
+  </script>
