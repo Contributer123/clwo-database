@@ -41,8 +41,7 @@ window.onload = function () {
 </head>
 
 <body>
-  <nav-placeholder></nav-placeholder>
-
+  <div id="nav-placeholder"></div>
 	<div class="section blue lighten-5" id="index-banner">
     <div class="container">
       <h1 class="header center blue-text">Player over Time per Map</h1>
