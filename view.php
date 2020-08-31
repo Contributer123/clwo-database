@@ -47,7 +47,6 @@ window.onload = function () {
       <h1 class="header center blue-text">Player over Time per Map</h1>
       <div class="row center">  
       </div>
-
     </div>
   </div>
   
@@ -88,7 +87,7 @@ $map_data = [];
 
 $sql = "SELECT MapDisplayName FROM `snapshots` GROUP BY MapDisplayName";
 // Do one big SQL Query instead of many small ones 
-$big_sql_req = "SELECT ClientCount, EntryTime, MapDisplayName FROM `snapshots` WHERE EntryTime > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 10080 minute) ORDER BY `ServerID` ASC, `EntryTime` DESC, `MapDisplayName` DESC";
+$big_sql_req = "SELECT ClientCount, EntryTime, MapDisplayName FROM `snapshots` WHERE EntryTime > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 30240 minute) ORDER BY `ServerID` ASC, `EntryTime` DESC, `MapDisplayName` DESC";
 
 $starttime= round(microtime(true) * 1000);
 
