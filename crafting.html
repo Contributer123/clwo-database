@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Starter Template - Materialize</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style>   
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    main {
+      flex: 1 0 auto;
+    }
+    </style> 
+     
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="section blue lighten-5" id="index-banner">
+    <div class="container">
+      <h1 class="header center blue-text">Crafting Helper</h1>
+    </div>
+  </div>
+
+
+  <div class="blue lighten-5">
+    <div class="container section">
+      <div class="row">
+        <div class="col xl4 l4 m4 s4" id="craftable_items"></div>
+        <div class="col xl4 l4 m4 s4" id="needed_stuff_to_craft"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="page-footer blue">
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="https://steamcommunity.com/id/IAmFat__/" target="_blank">IAmFat</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  </body>
+</html>
+<script>
+  
+//https://clwo.eu/jailbreak/api/v2/crafting.php?AccountID=32279549
+  
+
+let recipes = {};
+recipes["Bomb"] = {
+    "cNiceName": "Bomb",
+    "Returns": 1,
+    "RequiredElectronicPart": 1, 
+    "RequiredExplosivePart": 3, 
+    "Illegal": true,
+    "Item" : true
+    };
+    
+recipes["Mine"] = {
+  "cNiceName": "Mine",
+  "Returns": 1,
+  "RequiredElectronicPart": 1, 
+  "RequiredExplosivePart": 3, 
+  "Illegal": true,
+  "Frozen": true,
+  "Item" : true
+  };
+  
+recipes["Flashbang"] = {
+  "cNiceName": "Flashbang",
+  "Returns": 4,
+  "RequiredExplosivePart": 1, 
+  "RequiredCartridges": 4, 
+  "Item" : true
+  };
+  
+  
+recipes["HE grenade"] = {
+  "cNiceName": "HE grenade",
+  "Returns": 2,
+  "RequiredExplosivePart": 1, 
+  "RequiredCartridges": 4, 
+  "Illegal": true,
+  "Item" : true
+  };
+  
+  
+recipes["Molotov"] = {
+  "cNiceName": "Molotov",
+  "Returns": 1,
+  "RequiredExplosivePart": 1, 
+  "RequiredCartridges": 1, 
+  "Illegal": true,
+  "Item" : true
+  };
+  
+  
+recipes["Smoke grenade"] = {
+  "cNiceName": "Smoke grenade",
+  "Returns": 2,
+  "RequiredPyrophoric": 1, 
+  "RequiredMedical": 2, 
+  "RequiredCartridges": 2, 
+  "Item" : true
+  };
+  
+  
+recipes["Body armor"] = {
+  "cNiceName": "Body armor",
+  "Returns": 1,
+  "RequiredKevlar": 3, 
+  "Item" : true
+  };
+  
+  
+recipes["Helmet + body armor"] = {
+  "cNiceName": "Helmet + body armor",
+  "Returns": 1,
+  "RequiredKevlar": 5, 
+  "Item" : true
+  };
+  
+recipes["Kevlar"] = {
+  "cNiceName": "Kevlar",
+  "RequiredFiber": 20,
+  "Returns": 1,
+  };
+  
+  
+recipes["USP"] = {
+  "cNiceName": "USP",
+  "Returns": 1,
+  "RequiredWeaponPart": 2, 
+  "RequiredAmmunition": 1, 
+  "Illegal": true,
+  "Item" : true
+  };
+  
+recipes["P250"] = {
+  "cNiceName": "P250",
+  "Returns": 1,
+  "RequiredWeaponPart": 2, 
+  "RequiredAmmunition": 1, 
+  "Illegal": true,
+  "Item" : true
+  };
+  
+recipes["MAC-10"] = {
+  "cNiceName": "MAC-10",
+  "Returns": 1,
+  "RequiredWeaponPart": 2, 
+  "RequiredAmmunition": 2, 
+  "Illegal": true,
+  "Item" : true
+  };
+  
+recipes["UMP-45"] = {
+  "cNiceName": "UMP-45",
+  "Returns": 1,
+  "RequiredWeaponPart": 2, 
+  "RequiredAmmunition": 2, 
+  "Illegal": true,
+  "Item" : true
+  }
+recipes["AK-47"] = {
+  "cNiceName": "AK-47",
+  "Returns": 1,
+  "RequiredWeaponPart": 3, 
+  "RequiredAmmunition": 2, 
+  "Illegal": true,
+  "Item" : true
+  }
+recipes["M4A1-S"] = {
+  "cNiceName": "M4A1-S",
+  "Returns": 1,
+  "RequiredWeaponPart": 3, 
+  "RequiredAmmunition": 2, 
+  "Illegal": true,
+  "Item" : true
+  }
+recipes["M4A4"] = {
+  "cNiceName": "M4A4",
+  "Returns": 1,
+  "RequiredWeaponPart": 3, 
+  "RequiredAmmunition": 2,
+  "Illegal": true,
+  "Item" : true
+  }
+recipes["AWP"] = {
+  "cNiceName": "AWP",
+  "Returns": 1,
+  "RequiredWeaponPart": 5,
+  "RequiredAmmunition": 3, 
+  "Illegal": true,
+  "Item" : true
+  }
+recipes["Ammunition"] = {
+  "cNiceName": "Ammunition",
+  "Returns": 3,
+      "RequiredCartridges": 3,
+      "RequiredPyrophoric": 1,
+      "RequiredSteel": 1,
+  "Illegal": true,
+  
+  }
+recipes["ElectronicPart"] = {
+  "cNiceName": "ElectronicPart",
+  "RequiredElecktrum": 3,
+  "RequiredPlatinum": 40,
+  "NeedsOvenUses": 1,
+  "Returns": 1,
+  "StoveUsage": true,
+  };
+recipes["ExplosivePart"] = {
+  "cNiceName": "ExplosivePart",
+  "RequiredPyrophoric": 4,
+  "RequiredSteel": 1,
+  "Returns": 1,
+  "Illegal": true,
+  "Frozen": true,
+  };
+recipes["WeaponPart"] = {
+  "cNiceName": "WeaponPart",
+  "RequiredSteel": 5,
+  "Returns": 1,
+  };
+recipes["Healthshot"] = {
+  "cNiceName": "Healthshot",
+  "Returns": 1,
+  "RequiredPlatinum": 20,
+  "RequiredMedical": 4,
+  "Item" : true
+  };
+recipes["Tank"] = {
+  "cNiceName": "Tank",
+  "Illegal": true,
+  "Returns": 1,
+  "RequiredStrengthSerum": 5,
+  "RequiredKevlar": 3,
+  "Item" : true
+  };
+recipes["Heavy"] = {
+  "cNiceName": "Heavy",
+  "Returns": 1,
+  "RequiredStrengthSerum": 1,
+  "RequiredKevlar": 2,
+  "Item" : true
+  };
+recipes["Carepackage"] = {
+  "cNiceName": "Carepackage",
+  "Returns": 1,
+  "RequiredCurrencyGuardCoins": 400,
+  "Item" : true
+  };
+recipes["Lootpackage"] = {
+  "cNiceName": "Lootpackage",
+  "Returns": 1,
+  "RequiredCurrencyPlatinum": 40,
+  "Item" : true
+
+  };
+recipes["Elecktrum"] = {
+  "cNiceName": "Elecktrum",
+  "RequiredGold": 16,
+  "RequiredSilver": 4,
+  "NeedsOvenUses": 1,
+  "Returns": 1,
+  "StoveUsage": true,
+  };
+recipes["Steel"] = {
+  "cNiceName": "Steel",
+  "RequiredIron": 20,
+  "NeedsOvenUses": 1,
+  "Returns": 1,
+  "StoveUsage": true,
+  };
+recipes["Pyrophoric"] = {
+  "Illegal": true,
+  "Frozen": true,
+  "cNiceName": "Pyrophoric",
+  "RequiredIron": 4,
+  "RequiredPhosphorus": 16,
+  "Returns": 1,
+  };
+recipes["Cartridges"] = {
+  "cNiceName": "Cartridges",
+  "RequiredCopper": 16,
+  "RequiredGold": 4,
+  "NeedsOvenUses": 1,
+  "Returns": 1,
+  "Illegal": true,
+  "StoveUsage": true,
+  };
+recipes["Medical"] = {
+  "cNiceName": "Medical",
+  "RequiredPenicillin": 20,
+  "Returns": 1,
+  };
+recipes["Freeday"] = {
+  "cNiceName": "Freeday",
+  "RequiredCurrencyGuardCoins": 250,
+  "Returns": 1,
+  "Item" : true
+  };
+recipes["Antiserum"] = {
+  "cNiceName": "Antiserum",
+  "Collectable": true
+  };
+recipes["Strength Serum"] = {
+  "cNiceName": "Strength Serum",
+  "Collectable": true
+  };
+recipes["Luck Potion"] = {
+  "cNiceName": "Luck Potion",
+  "Collectable": true,
+  };
+let res = {};
+download_data("https://clwo.eu/jailbreak/api/v2/crafting.php?AccountID=74630545");
+
+function download_data(url){
+ 
+  fetch(url)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(content) {
+  
+    res["Raw resources"] = {};
+    res["Refinded resources"] = {};
+    res["Processors"] = {};
+    res["Parts"] = {};
+    res["Currencies"] = {};
+    res["Collectables"] = {};
+
+
+    
+    Object.keys(content.data).forEach(key => {
+      console.log(key, content.data[key]);
+    });
+    
+    console.log(content);
+    
+    let resources_names_list = ["gold", "iron", "silver", "copper", "platinum", "phosphorus", "penicillin", "fiber"];
+    resources_names_list.forEach(key => {
+      if(content.data[key] == null)
+        content.data[key] = 0;
+      res["Raw resources"][key] = content.data[key];
+      content.data[key] = null;
+      });    
+    
+    let Refined_resources_names_list = ["elecktrum", "steel", "pyrophoric", "kevlar", "medical", "cartridges"];
+    Refined_resources_names_list.forEach(key => {
+      if(content.data[key] == null)
+        content.data[key] = 0;
+      res["Refinded resources"][key] = content.data[key];
+      content.data[key] = null;
+      });    
+    
+    let Processors_names_list = ["ovenuses", "salvagekituses", "assemblyuses"];
+    Processors_names_list.forEach(key => {
+      if(content.data[key] == null)
+        content.data[key] = 0;
+      res["Processors"][key] = content.data[key];
+      content.data[key] = null;
+      });    
+      
+    let Parts_names_list = ["electronic", "weapon", "explosive", "ammunition"];
+    Parts_names_list.forEach(key => {
+      if(content.data[key] == null)
+        content.data[key] = 0;
+      res["Parts"][key] = content.data[key];
+      content.data[key] = null;
+      });      
+      
+    let Currencies_names_list = ["platinumcoins", "loyaltycoins", "guardcoins"];
+    Currencies_names_list.forEach(key => {
+      if(content.data[key] == null)
+        content.data[key] = 0;
+      res["Currencies"][key] = content.data[key];
+      content.data[key] = null;
+      }); 
+      
+    let Collectables_names_list = ["antiserum", "luckpotion", "strengthserum"];
+    Collectables_names_list.forEach(key => {
+      if(content.data[key] == null)
+        content.data[key] = 0;
+      res["Collectables"][key] = content.data[key];
+      content.data[key] = null;
+      }); 
+      
+     Object.keys(recipes).forEach(key => {
+      console.log(key, recipes[key]);
+        if(recipes[key]["Item"] == true)
+          $("#craftable_items").append("<div>" + key + "</div>");
+    }); 
+    $("#craftable_items").each(function(index) {
+      $(this).on("click", function(){
+        var text = $(event.target).text();
+        let text_to_write = "";
+        text_to_write +=  "<div>You wanted to craft: " + recipes[text]["Returns"] + " "+ recipes[text]["cNiceName"] +"</div>";
+        text_to_write +=  "<div>You need the following Parts:</div>";
+        
+        text_to_write +=  "<div></div>";
+        text_to_write +=  "<div></div>";
+        text_to_write +=  "<div>" + JSON.stringify(recipes[text]) + "<div>";
+
+        document.getElementById("needed_stuff_to_craft").innerHTML = text_to_write;
+
+      });
+    });
+    
+
+  });;
+}
+
+
+  </script>
+  <script>
+  $.get("navigation.html", function(data){
+      $("#nav-placeholder").replaceWith(data);
+  });
+  </script>
