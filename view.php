@@ -45,11 +45,11 @@ window.onload = function () {
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Statistics</a>
       <ul class="right hide-on-med-and-down">
         <li><a href="rankings.html?days=30">Playtime Ranking</a></li>
-        <li><a href="graphs.html">Map Overview</a></li>
+        <li><a href="graphs.html">Player over Time per Map</a></li>
       </ul>
       <ul id="nav-mobile" class="sidenav">
         <li><a href="rankings.html?days=30">Playtime Ranking</a></li>
-        <li><a href="graphs.html">Map Overview</a></li>
+        <li><a href="graphs.html">Player over Time per Map</a></li>
       </ul>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
@@ -57,7 +57,7 @@ window.onload = function () {
   
 	<div class="section blue lighten-5" id="index-banner">
     <div class="container">
-      <h1 class="header center blue-text">Map Statistics</h1>
+      <h1 class="header center blue-text">Player over Time per Map</h1>
       <div class="row center">  
       </div>
 
