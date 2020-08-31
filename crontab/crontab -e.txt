@@ -1,0 +1,3 @@
+* * * * * /bin/sh /home/pi/Desktop/read_page.sh
+1 * * * * sudo service mysqld stop && sudo service mysqld restart
+*/10 * * * * wget -O - -q -t 1 --timeout=10 http://localhost/view.php > /var/www/html/graphs.html

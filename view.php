@@ -607,7 +607,7 @@ function print_data() {
 
 			content += "<div class='col xl4 l5 m6 s7'>";
 
-			content += "<img style='max-width: 512px;' onerror=\"this.src='https://image.gametracker.com/images/maps/160x120/csgo/" + map_name + ".jpg'\" onclick='render_map_data(\"" + map_name+"\", " + global_map_data[map_name].length +");' id='image_container_" + map_name +"' src='images/" + map_name + ".jpg' id='preview'/>";
+			content += "<img style='max-width: 512px;' onerror=\"this.src='https://image.gametracker.com/images/maps/160x120/csgo/" + map_name + ".jpg';this.onerror = null;\" onclick='render_map_data(\"" + map_name+"\", " + global_map_data[map_name].length +");' id='image_container_" + map_name +"' src='images/" + map_name + ".jpg' id='preview'/>";
 
 			content += "</div>";
 
