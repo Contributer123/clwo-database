@@ -12,6 +12,8 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+
     <style>   
     body {
       display: flex;
@@ -20,6 +22,15 @@
     }
     main {
       flex: 1 0 auto;
+    }
+    #craftable_items > div {
+      border: 2px solid blue;
+      border-radius: 4px;
+      width: 100%;
+      margin: 5px;
+      padding: 4px;
+      display:grid;
+      justify-items: center;
     }
     </style> 
      
@@ -35,10 +46,31 @@
 
 
   <div class="blue lighten-5">
-    <div class="container section">
+    <div class="section">
+      <div class="row container" >
+        <div class="col xl6 l6 m6 s6">
+           <span>Enter your <b>CLWO AccountID </b>here. if you not know where to find it, visit <a href="https://clwo.eu/jailbreak/profile.php">HERE</a></span>
+           <div> If you still cant find it, you can click here for <a href="images/help.PNG">HELP</a></div>
+           <input id="player_account_id" value="74630545"></input>
+        </div>
+                
+         <div class="col xl3 l4 m6 s6">
+            <span style="border:3px solid blue; display:grid;font-size: 40px;font-weight: bold;justify-content: center;border-radius: 15px;" onclick="download_data('https://clwo.eu/jailbreak/api/v2/crafting.php?AccountID=' + document.getElementById('player_account_id').value);">UPDATE</span>
+         </div>
+      </div>
+      
+      <div class="row container">
+        <label>How many Items do you want to craft?</label>
+        <input class="col xl2 l3 m5 s6" type="number" min="1" max="100" step="1" value="1" id="number_to_craft" required>
+      </div>
+      
       <div class="row">
-        <div class="col xl4 l4 m4 s4" id="craftable_items"></div>
-        <div class="col xl4 l4 m4 s4" id="needed_stuff_to_craft"></div>
+        <div class="col xl2 l3 m3 s4" id="craftable_items"></div>
+        <svg class="col xl10 l9 m9 s8" id="draw_graph_here" style="max-height: 50vh;" height="100%" viewBox=" 0 0 600 400"></svg>
+      </div>
+      <div class="row">
+        <div class="col xl4 l4 m4 s4" id=""></div>
+        <div class="col xl8 l8 m8 s8" style="display:none" id="needed_stuff_to_craft"></div>
       </div>
     </div>
   </div>
@@ -330,37 +362,47 @@ recipes["Luck Potion"] = {
   "Collectable": true,
   };
 let res = {};
-download_data("https://clwo.eu/jailbreak/api/v2/crafting.php?AccountID=74630545");
+let res_left;
+let text_box = document.getElementById("needed_stuff_to_craft");
+let level = 0;
+let tree_data = [{}];
+let downloaded_data = "";
 
+function add(text)
+{
+let pre_text = (level > 0) ? "<span style='color:red;'>"+ ">".repeat(level) + "</span>" : "";
+  text_box.innerHTML += "<div>"+ pre_text + text + "</div>";  
+}
 function download_data(url){
  
   fetch(url)
   .then(function(response) {
     return response.json();
   })
-  .then(function(content) {
+  .then(
+  function(content)
+  {
+    downloaded_data = content;
+    download_finished_function(content);
+  });
+}
+function download_finished_function(content) {
   
+    document.getElementById("craftable_items").innerHTML = "";
+    
     res["Raw resources"] = {};
     res["Refinded resources"] = {};
     res["Processors"] = {};
     res["Parts"] = {};
     res["Currencies"] = {};
     res["Collectables"] = {};
-
-
-    
-    Object.keys(content.data).forEach(key => {
-      console.log(key, content.data[key]);
-    });
-    
-    console.log(content);
-    
+    console.log(content)
     let resources_names_list = ["gold", "iron", "silver", "copper", "platinum", "phosphorus", "penicillin", "fiber"];
     resources_names_list.forEach(key => {
       if(content.data[key] == null)
         content.data[key] = 0;
       res["Raw resources"][key] = content.data[key];
-      content.data[key] = null;
+      
       });    
     
     let Refined_resources_names_list = ["elecktrum", "steel", "pyrophoric", "kevlar", "medical", "cartridges"];
@@ -368,7 +410,7 @@ function download_data(url){
       if(content.data[key] == null)
         content.data[key] = 0;
       res["Refinded resources"][key] = content.data[key];
-      content.data[key] = null;
+      
       });    
     
     let Processors_names_list = ["ovenuses", "salvagekituses", "assemblyuses"];
@@ -376,7 +418,7 @@ function download_data(url){
       if(content.data[key] == null)
         content.data[key] = 0;
       res["Processors"][key] = content.data[key];
-      content.data[key] = null;
+      
       });    
       
     let Parts_names_list = ["electronic", "weapon", "explosive", "ammunition"];
@@ -384,7 +426,7 @@ function download_data(url){
       if(content.data[key] == null)
         content.data[key] = 0;
       res["Parts"][key] = content.data[key];
-      content.data[key] = null;
+      
       });      
       
     let Currencies_names_list = ["platinumcoins", "loyaltycoins", "guardcoins"];
@@ -392,7 +434,7 @@ function download_data(url){
       if(content.data[key] == null)
         content.data[key] = 0;
       res["Currencies"][key] = content.data[key];
-      content.data[key] = null;
+      
       }); 
       
     let Collectables_names_list = ["antiserum", "luckpotion", "strengthserum"];
@@ -400,34 +442,396 @@ function download_data(url){
       if(content.data[key] == null)
         content.data[key] = 0;
       res["Collectables"][key] = content.data[key];
-      content.data[key] = null;
+      
       }); 
       
      Object.keys(recipes).forEach(key => {
-      console.log(key, recipes[key]);
+      //console.log(key, recipes[key]);
         if(recipes[key]["Item"] == true)
           $("#craftable_items").append("<div>" + key + "</div>");
     }); 
-    $("#craftable_items").each(function(index) {
-      $(this).on("click", function(){
-        var text = $(event.target).text();
-        let text_to_write = "";
-        text_to_write +=  "<div>You wanted to craft: " + recipes[text]["Returns"] + " "+ recipes[text]["cNiceName"] +"</div>";
-        text_to_write +=  "<div>You need the following Parts:</div>";
-        
-        text_to_write +=  "<div></div>";
-        text_to_write +=  "<div></div>";
-        text_to_write +=  "<div>" + JSON.stringify(recipes[text]) + "<div>";
-
-        document.getElementById("needed_stuff_to_craft").innerHTML = text_to_write;
-
-      });
-    });
+    /* Copy all resources to res_left and remove those you need */
+    res_left = Object.assign({}, res);
     
+    let crafting_function = function(item_to_craft, amount, parent_node_name){
+        add_node(item_to_craft, parent_node_name, amount, level, "Craft");
+        level += 1;
+        if(recipes[item_to_craft] == null)
+        {
+            alert(item_to_craft + " not found!!!");
+            return;
+        }
+        /* You need to multiply those, since you can get 4 flashs by crafting one recipe*/
+        let calculated_amount = amount * recipes[item_to_craft]["Returns"]
+        add("To Craft: " +  calculated_amount + " " + recipes[item_to_craft]["cNiceName"] +" you will need");
+        // add("You need the following Parts:");
+        Object.keys(recipes[item_to_craft]).forEach(function(name){
+        let stock;
+        let needed_stock;
+          switch(name) {
+            case "cNiceName":
+            break;
+            case "Returns":
+            break;
+            case "Illegal":
+            break;
+            case "Frozen":
+            break;
+            case "Item":
+            break;
+            case "RequiredAmmunition":
+              stock = res["Parts"]["ammunition"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Parts"]["ammunition"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("You need to craft " + (needed_stock - stock) + " Ammunition");
+                crafting_function("Ammunition", needed_stock - stock, item_to_craft); 
+              }
+              else
+              {
+                  add("You have enough WeaponPart: Stock " + stock + " you need " + needed_stock);
+              }                    
+            break;
+            case "RequiredCartridges":
+              stock = res["Refinded resources"]["cartridges"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Refinded resources"]["cartridges"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("Craft " + (needed_stock - stock) + " Cartridges");
+                crafting_function("Cartridges", needed_stock - stock, item_to_craft); 
+              }
+              else
+              {
+                  add("You have enough Cartridges: Stock " + stock + " you need " + needed_stock);
+              }              
+            break;
+            case "RequiredCopper":
+              stock = res["Raw resources"]["copper"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Raw resources"]["copper"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                 add("Buy " + (needed_stock - stock) + " Copper");
+                 add_node("Copper", item_to_craft, (needed_stock - stock), level, "Buy");
+              }
+              else
+              {
+                  add("You have enough Iron: Stock " + stock + " you need " + needed_stock, item_to_craft);
+              }             
+            break;
+            case "RequiredCurrencyGuardCoins":
+              stock = res["Currencies"]["guardcoins"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Currencies"]["guardcoins"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                 add("Get " + (needed_stock - stock) + " Guardcoins");
+                 add_node("Guardcoins", item_to_craft, (needed_stock - stock), level, "Earn");
+              }
+              else
+              {
+                  add("You have enough Guardcoins: Stock " + stock + " you need " + needed_stock, item_to_craft);
+              }
+            break;
+            case "RequiredCurrencyPlatinum":
+              stock = res["Currencies"]["platinumcoins"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Currencies"]["platinumcoins"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                 add("Get " + (needed_stock - stock) + " Platinum (Currency)");
+                 add_node("Platinum (Currency)", item_to_craft, (needed_stock - stock), level, "Earn");
+              }
+              else
+              {
+                  add("You have enough Guardcoins: Stock " + stock + " you need " + needed_stock, item_to_craft);
+              }            
+            break;
+            case "RequiredElecktrum":
+            
+              stock = res["Refinded resources"]["elecktrum"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Refinded resources"]["elecktrum"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("Craft " + (needed_stock - stock) + " Elecktrum");
+                crafting_function("Elecktrum", needed_stock - stock, item_to_craft); 
+              }
+              else
+              {
+                  add("You have enough Elecktrum: Stock " + stock + " you need " + needed_stock);
+              }                  
+            
+            break;
+            case "RequiredElectronicPart":
+              stock = res["Parts"]["electronic"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Parts"]["electronic"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("Craft " + (needed_stock - stock) + " ElectronicPart");
+                crafting_function("ElectronicPart", needed_stock - stock, item_to_craft); 
+              }
+              else
+              {
+                  add("You have enough ElectronicParts: Stock " + stock + " you need " + needed_stock);
+              }
+            break;
+            case "RequiredExplosivePart":
+              stock = res["Parts"]["explosive"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Parts"]["explosive"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("You need to craft " + (needed_stock - stock) + " ExplosivePart");
+                crafting_function("ExplosivePart", needed_stock - stock, item_to_craft); 
+              }
+              else
+              {
+                  add("You have enough ExplosivePart: Stock " + stock + " you need " + needed_stock);
+              }
+            break;
+            case "RequiredFiber":
+              stock = res["Raw resources"]["fiber"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Raw resources"]["fiber"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                 add("Buy " + (needed_stock - stock) + " Fiber");
+                 add_node("Fiber", item_to_craft, (needed_stock - stock), level, "Buy");
+              }
+              else
+              {
+                  add("You have enough Fiber: Stock " + stock + " you need " + needed_stock, item_to_craft);
+              }                 
+            break;
+            case "RequiredGold":
+              stock = res["Raw resources"]["gold"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Raw resources"]["gold"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("Buy " + (needed_stock - stock) + " Gold (Resource)");
+                add_node("Gold", item_to_craft, (needed_stock - stock), level, "Buy");
+              }
+              else
+              {
+                  add("You have enough Gold: Stock " + stock + " you need " + needed_stock);
+              }              
+            break;
+            case "RequiredIron":
+              stock = res["Raw resources"]["iron"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Raw resources"]["iron"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                 add("Buy " + (needed_stock - stock) + " Iron");
+                 add_node("Iron", item_to_craft, (needed_stock - stock), level, "Buy");
+              }
+              else
+              {
+                  add("You have enough Iron: Stock " + stock + " you need " + needed_stock, item_to_craft);
+              } 
+            break;
+            case "RequiredKevlar":
+              stock = res["Refinded resources"]["kevlar"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Refinded resources"]["kevlar"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("Craft " + (needed_stock - stock) + " Kevlar");
+                crafting_function("Kevlar", needed_stock - stock, item_to_craft); 
+              }
+              else
+              {
+                  add("You have enough Kevlar: Stock " + stock + " you need " + needed_stock);
+              }              
+            break;
+            case "RequiredMedical":
+              stock = res["Refinded resources"]["medical"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Refinded resources"]["medical"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("Craft " + (needed_stock - stock) + " Medical");
+                crafting_function("Medical", needed_stock - stock, item_to_craft); 
+              }
+              else
+              {
+                  add("You have enough Medical: Stock " + stock + " you need " + needed_stock);
+              }                  
+            break;
+            case "RequiredPenicillin":
+              stock = res["Raw resources"]["penicillin"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Raw resources"]["penicillin"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                 add("Buy " + (needed_stock - stock) + " Penicillin");
+                 add_node("Penicillin", item_to_craft, (needed_stock - stock), level, "Buy");
+              }
+              else
+              {
+                  add("You have enough Penicillin: Stock " + stock + " you need " + needed_stock, item_to_craft);
+              }             
+            break;
+            case "RequiredPhosphorus":
+              stock = res["Raw resources"]["phosphorus"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Raw resources"]["phosphorus"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                 add("Buy " + (needed_stock - stock) + " Phosphorus");
+                 add_node("Phosphorus", item_to_craft, (needed_stock - stock), level, "Buy");
+              }
+              else
+              {
+                  add("You have enough Iron: Phosphorus " + stock + " you need " + needed_stock, item_to_craft);
+              }             
+            break;
+            case "RequiredPlatinum":
+              stock = res["Raw resources"]["platinum"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Raw resources"]["platinum"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("Buy " + (needed_stock - stock) + " Platinum (Resource)");
+                add_node("Platinum (Resource)", item_to_craft, (needed_stock - stock), level, "Buy");
+              }
+              else
+              {
+                  add("You have enough Platinum (Resource): Stock " + stock + " you need " + needed_stock);
+              }               
+            break;
+            case "RequiredPyrophoric":
+              stock = res["Refinded resources"]["pyrophoric"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Refinded resources"]["pyrophoric"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("Craft " + (needed_stock - stock) + " Pyrophoric");
+                crafting_function("Pyrophoric", needed_stock - stock, item_to_craft); 
+              }
+              else
+              {
+                  add("You have enough Pyrophoric: Stock " + stock + " you need " + needed_stock);
+              }            
+            break;
+            case "RequiredSilver":
+              stock = res["Raw resources"]["silver"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Raw resources"]["silver"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("Buy " + (needed_stock - stock) + " Silver (Resource)");
+                add_node("Silver", item_to_craft, (needed_stock - stock), level, "Buy");
+              }
+              else
+              {
+                  add("You have enough Silver (Resource): Stock " + stock + " you need " + needed_stock);
+              }                
+            break;
+            case "RequiredSteel":
+              stock = res["Refinded resources"]["steel"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Refinded resources"]["steel"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("Craft " + (needed_stock - stock) + " Steel");
+                crafting_function("Steel", needed_stock - stock, item_to_craft); 
+              }
+              else
+              {
+                  add("You have enough Steel: Stock " + stock + " you need " + needed_stock);
+              }               
+            break;
+            case "RequiredStrengthSerum":
+              stock = res["Collectables"]["strengthserum"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Parts"]["strengthserum"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("You need to craft " + (needed_stock - stock) + " strengthserum");
+                add_node("Strengthserum", item_to_craft, (needed_stock - stock), level, "Earn");
 
-  });;
-}
+                //crafting_function("Strength Serum", needed_stock - stock, item_to_craft); 
+              }
+              else
+              {
+                  add("You have enough Strength Serum: Stock " + stock + " you need " + needed_stock);
+              }            
+            break;
+            case "RequiredWeaponPart":
+              stock = res["Parts"]["weapon"];
+              needed_stock = recipes[item_to_craft][name] * amount;
+              res_left["Parts"]["weapon"] = stock - needed_stock;
+              if(stock - needed_stock < 0)
+              { 
+                add("You need to craft " + (needed_stock - stock) + " WeaponPart");
+                crafting_function("WeaponPart", needed_stock - stock, item_to_craft); 
+              }
+              else
+              {
+                  add("You have enough WeaponPart: Stock " + stock + " you need " + needed_stock);
+              }            
+            break;
+            default: 
+            //add("<div style='color:red;'>Not found " + name + "");
+            
+            break;
+            }
+          
+        })
+        add("" + JSON.stringify(recipes[item_to_craft]) + "");
 
+        level -= 1;
+        if(level == 0)
+        {
+            generate_tree_graph(tree_data);
+        }
+      };
+    let items_list = document.getElementById("craftable_items").children;
+    for(let j = 0; j < items_list.length; j++)
+    {
+      let thing_you_want_to_craft = items_list[j].innerText;
+      items_list[j].onclick = function() { 
+      
+        /* Cleanup */
+        document.getElementById("craftable_items").innerHTML = "";
+        
+        /* Redraw UI */
+        download_finished_function(downloaded_data);
+
+      
+        /* Highlight Pressed Button*/
+        let brother_elements = document.getElementById("craftable_items").children;
+        for(let i = 0; i < brother_elements.length; i++)
+        {
+          brother_elements[i].style.background = "";
+          if(i == j)
+          {
+            brother_elements[i].style.background = "gold";
+          }
+        }
+        
+        
+        /* Cleanup previous drawn SVG Elements */
+        document.getElementById("draw_graph_here").innerHTML = "";
+        
+        /* Cleanup already drawn tree data */
+        tree_data = [{}];
+        
+        /* Start calculating what you need and draw the graph */
+        
+        crafting_function(thing_you_want_to_craft, document.getElementById("number_to_craft").value, thing_you_want_to_craft); 
+        
+        };
+    }
+    
+    
+  };
 
   </script>
   <script>
@@ -435,3 +839,177 @@ function download_data(url){
       $("#nav-placeholder").replaceWith(data);
   });
   </script>
+
+  
+  <script>
+  
+function add_node(item_to_craft, parent_node_name, amount, level, type)
+{
+  let parent_found = false;
+  if(level == 0)
+  {
+    tree_data[0]["name"] = type + " " + amount + " " + item_to_craft;
+    tree_data[0]["first_line"] = type + " " + amount;
+    tree_data[0]["second_line"] = item_to_craft;
+    tree_data[0]["item_name"] = item_to_craft;
+    tree_data[0]["parent"] = null;
+    tree_data[0]["children"] = [];
+    parent_found = true;
+  }
+  else if(level == 1)
+  {
+    // Direct descendent of item
+    tree_data[0].children.push(
+    {
+      "item_name": item_to_craft, 
+      "name" : type + " " + amount + " " + item_to_craft,
+      "parent": parent_node_name,
+      "children" : [],
+      "first_line" : type + " " + amount,
+      "second_line" : item_to_craft
+    });
+    parent_found = true;
+  }
+  else if(level == 2 || level == 3)
+  {
+    // Search for your parent node 
+    for(let i = 0; i < tree_data[0].children.length; i++)
+    {
+      if(tree_data[0].children[i].item_name === parent_node_name)
+      {
+        // Parent node found
+        tree_data[0].children[i].children.push(
+        {
+          "item_name": item_to_craft, 
+          "name" : type + " " + amount + " " + item_to_craft,
+          "parent": parent_node_name,
+          "children" : [],
+          "first_line" : type + " " + amount,
+          "second_line" : item_to_craft
+        });
+        parent_found = true;
+      }
+      else
+      {
+        /* Now iterate over child elements of each child to find your parent*/
+        for(let j = 0; j < tree_data[0].children[i].children.length; j++)
+        {
+          if(tree_data[0].children[i].children[j].item_name === parent_node_name)
+          {
+            // Parent node found
+            tree_data[0].children[i].children[j].children.push(
+            {
+              "item_name": item_to_craft, 
+              "name" : type + " " + amount + " " + item_to_craft,
+              "parent": parent_node_name,
+              "children" : [],
+              "first_line" : type + " " + amount,
+              "second_line" : item_to_craft
+            });
+            parent_found = true;
+          }          
+        }
+      }
+    }
+  }
+  
+  if(!parent_found)
+  {
+      alert("Not found " + parent_found);
+  }
+}
+  
+function generate_tree_graph(treeData)
+{
+  // ************** Generate the tree diagram	 *****************
+  var margin = {top: 50, right: 0, bottom: 0, left: 0},
+    width = 500;//200 - margin.right - margin.left,
+    height = 200;//450 - margin.top - margin.bottom;
+    
+  var i = 0;
+
+  var tree = d3.layout.tree()
+    .size([height, width]);
+
+  var diagonal = d3.svg.diagonal()
+    .projection(function(d) { return [d.x, d.y]; });
+
+  var svg = d3.select("#draw_graph_here")
+    .attr("width", width + margin.right + margin.left)
+   // .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  root = treeData[0];
+    
+  update(root);
+  function update(source) {
+
+    // Compute the new tree layout.
+    var nodes = tree.nodes(root).reverse(),
+      links = tree.links(nodes);
+
+    // Normalize for fixed-depth.
+    nodes.forEach(function(d) { d.y = d.depth * 100; d.x = d.x*3.5; });
+
+    // Declare the nodes…
+    var node = svg.selectAll("g.node")
+      .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+    // Enter the nodes.
+    var nodeEnter = node.enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { 
+        return "translate(" + d.x + "," + d.y + ")"; });
+
+    nodeEnter.append("circle")
+      .attr("r", 10)
+      .style("fill", "#fff");
+
+    nodeEnter.append("text")
+      .attr("y", function(d) { 
+        return d.children || d._children ? -25 : 25; })
+      .attr("dy", ".35em")
+      .attr("text-anchor", "middle")
+      .text(function(d) {return d.children || d._children ? d.second_line : d.first_line; })
+      .style("fill-opacity", 1);
+      
+    nodeEnter.append("text")
+      .attr("y", function(d) { 
+        return d.children || d._children ? -40 : 40; })
+      .attr("dy", ".35em")
+      .attr("text-anchor", "middle")
+      .text(function(d) {return d.children || d._children ? d.first_line : d.second_line; })
+      .style("fill-opacity", 1);
+      
+    // Declare the links…
+    var link = svg.selectAll("path.link")
+      .data(links, function(d) { return d.target.id; });
+
+    // Enter the links.
+    link.enter().insert("path", "g")
+      .attr("class", "link")
+      .attr("d", diagonal);
+
+  }
+}
+
+
+</script>
+    <style>
+
+	.node circle {
+	  fill: #fff;
+	  stroke: steelblue;
+	  stroke-width: 3px;
+	}
+
+	.node text { font: 12px sans-serif; }
+
+	.link {
+	  fill: none;
+	  stroke: #ccc;
+	  stroke-width: 2px;
+	}
+	
+    </style>
