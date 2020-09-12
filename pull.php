@@ -6,6 +6,8 @@
   echo "Path after changing dir: " .getcwd();
   $output = shell_exec('./shell-script.sh');
   echo $output;
+  $output = exec('./shell-script.sh');
+  echo $output;
   echo "<pre>";
 ?>
 
