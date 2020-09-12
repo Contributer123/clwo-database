@@ -20,7 +20,7 @@ if (is_dir($dir)){
   echo "Path after changing dir: " .getcwd();
   $output = shell_exec('cd /home/pi/Desktop/ && sudo pull_script.sh');
   echo $output;
-  $output = shell_exec('cat "helloe"');
+  $output = exec('cat "helloe"', $output);
   echo "here.sth.".$output;
   echo "<pre>";
 ?>
