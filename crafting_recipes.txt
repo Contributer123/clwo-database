@@ -1,0 +1,1387 @@
+
+	PrintToConsoleiNilo("[recipes] Setting up recipes");
+	g_bBlockRecipes = false;
+	//setup refined recipies
+	Recipe TempRecipe;
+	for(ERefinedMaterial refinedmaterial = RefinedMaterial_Elecktrum;refinedmaterial <= RefinedMaterial_Cartridge;refinedmaterial++)
+	{
+		char cFieldName[64];
+		Format(cFieldName, sizeof(cFieldName), "%s",ERefinedMaterial_DBNames[refinedmaterial]);
+
+		char cNiceName[64];
+		Format(cNiceName, sizeof(cNiceName), "%s",ERefinedMaterial_Names[refinedmaterial]);
+
+		switch(refinedmaterial)
+		{
+			case RefinedMaterial_Elecktrum:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(ERefinedMaterial_DBTable);
+				TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+				TempRecipe.Dev = DEV_LOCKDOWN;
+				TempRecipe.NotCraftable = false;
+				TempRecipe.Delicate = false;
+				TempRecipe.Illegal = false;
+				TempRecipe.Time = 7.0;
+				TempRecipe.RequiredGold = 16;
+				TempRecipe.RequiredSilver = 4;
+				TempRecipe.NeedsOvenUses = 1;
+				TempRecipe.Returns = 1;
+				TempRecipe.Validate();
+			}
+			case RefinedMaterial_Steel:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(ERefinedMaterial_DBTable);
+				TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+				TempRecipe.Dev = DEV_LOCKDOWN;
+				TempRecipe.NotCraftable = false;
+				TempRecipe.Delicate = false;
+				TempRecipe.Illegal = false;
+				TempRecipe.Time = 7.0;
+				TempRecipe.RequiredIron = 20;
+				TempRecipe.NeedsOvenUses = 1;
+				TempRecipe.Returns = 1;
+				TempRecipe.Validate();
+			}
+			case RefinedMaterial_Pyrophoric:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(ERefinedMaterial_DBTable);
+				TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+				TempRecipe.Dev = DEV_LOCKDOWN;
+				TempRecipe.NotCraftable = false;
+				TempRecipe.Delicate = true;
+				TempRecipe.Illegal = true;
+				TempRecipe.Time = 7.0;
+				TempRecipe.RequiredIron = 4;
+				TempRecipe.RequiredPhosphorus = 16;
+				TempRecipe.Returns = 1;
+				TempRecipe.Validate();
+			}
+			case RefinedMaterial_Kevlar:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(ERefinedMaterial_DBTable);
+				TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+				TempRecipe.Dev = DEV_LOCKDOWN;
+				TempRecipe.NotCraftable = false;
+				TempRecipe.Delicate = false;
+				TempRecipe.Illegal = false;
+				TempRecipe.Time = 5.0;
+				TempRecipe.RequiredFiber = 20;
+				TempRecipe.Returns = 1;
+				TempRecipe.Validate();
+			}
+			case RefinedMaterial_Cartridge:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(ERefinedMaterial_DBTable);
+				TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+				TempRecipe.Dev = DEV_LOCKDOWN;
+				TempRecipe.NotCraftable = false;
+				TempRecipe.Delicate = false;
+				TempRecipe.Illegal = true;
+				TempRecipe.Time = 7.0;
+				TempRecipe.RequiredCopper = 16;
+				TempRecipe.RequiredGold = 4;
+				TempRecipe.NeedsOvenUses = 1;
+				TempRecipe.Returns = 1;
+				TempRecipe.Validate();
+			}
+			case RefinedMaterial_Medical:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(ERefinedMaterial_DBTable);
+				TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+				TempRecipe.Dev = DEV_LOCKDOWN;
+				TempRecipe.NotCraftable = false;
+				TempRecipe.Delicate = false;
+				TempRecipe.Illegal = false;
+				TempRecipe.Time = 5.0;
+				TempRecipe.RequiredPenicillin = 20;
+				TempRecipe.Returns = 1;
+				TempRecipe.Validate();
+			}
+		}
+	}
+
+	for(EProductPart part = ProductPart_ElectronicPart;part <= ProductPart_Ammunition;part++)
+	{
+		char cFieldName[64];
+		Format(cFieldName, sizeof(cFieldName), "%s",EProductPart_DBNames[part]);
+
+		char cNiceName[64];
+		Format(cNiceName, sizeof(cNiceName), "%s",EProductPart_Names[part]);
+
+		switch(part)
+		{
+			case ProductPart_Ammunition:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(EProductPart_DBTable);
+				TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+				TempRecipe.Dev = DEV_LOCKDOWN;
+				TempRecipe.NotCraftable = false;
+				TempRecipe.Delicate = false;
+				TempRecipe.Illegal = true;
+				TempRecipe.Time = 10.0;
+				TempRecipe.RequiredCartridge = 3;
+				TempRecipe.RequiredPyrophoric = 1;
+				TempRecipe.RequiredSteel = 1;
+				TempRecipe.NeedsOvenUses = 0;
+				TempRecipe.Returns = 3;
+				TempRecipe.Validate();
+			}
+			case ProductPart_ElectronicPart:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(EProductPart_DBTable);
+				TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+				TempRecipe.Dev = DEV_LOCKDOWN;
+				TempRecipe.NotCraftable = false;
+				TempRecipe.Delicate = false;
+				TempRecipe.Illegal = false;
+				TempRecipe.Time = 10.0;
+				TempRecipe.RequiredElecktrum = 3;
+				TempRecipe.RequiredPlatinum = 40;
+				TempRecipe.NeedsOvenUses = 1;
+				TempRecipe.Returns = 1;
+				TempRecipe.Validate();
+			}
+			case ProductPart_ExplosivePart:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(EProductPart_DBTable);
+				TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+				TempRecipe.Dev = DEV_LOCKDOWN;
+				TempRecipe.NotCraftable = false;
+				TempRecipe.Delicate = true;
+				TempRecipe.Illegal = true;
+				TempRecipe.Time = 7.0;
+				TempRecipe.RequiredPyrophoric = 4;
+				TempRecipe.RequiredSteel = 1;
+				TempRecipe.Returns = 1;
+				TempRecipe.Validate();
+			}
+			case ProductPart_WeaponPart:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(EProductPart_DBTable);
+				TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+				TempRecipe.Dev = DEV_LOCKDOWN;
+				TempRecipe.NotCraftable = false;
+				TempRecipe.Delicate = false;
+				TempRecipe.Illegal = false;
+				TempRecipe.Time = 7.0;
+				TempRecipe.RequiredSteel = 5;
+				TempRecipe.Returns = 1;
+				TempRecipe.Validate();
+			}
+		}
+	}
+
+
+	//setup currency
+	for(ECurrency currency = Currency_Platinum;currency <= g_ECurrency_Last;currency++)
+	{
+		char cFieldName[64];
+		Format(cFieldName, sizeof(cFieldName), "%s", ECurrency_DBNames[currency]);
+
+		char cNiceName[64];
+		Format(cNiceName, sizeof(cNiceName), "%s", ECurrency_Names[currency]);
+
+		switch(currency)
+		{
+			case Currency_Platinum:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(ECurrency_DBTable);
+				TempRecipe.Dev = DEV_LOCKDOWN;
+				TempRecipe.NotCraftable = false;
+				TempRecipe.Delicate = false;
+				TempRecipe.Illegal = false;
+				TempRecipe.Time = 2.0;
+				TempRecipe.RequiredPlatinum = 10;
+				TempRecipe.Returns = 1;
+				TempRecipe.Validate();
+			}
+			case Currency_Loyalty:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(ECurrency_DBTable);
+				TempRecipe.NotCraftable = true;
+				TempRecipe.Validate();
+			}
+			case Currency_Guard:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(ECurrency_DBTable);
+				TempRecipe.NotCraftable = true;
+				TempRecipe.Validate();
+			}
+			case Currency_Wager:
+			{
+				TempRecipe = Recipe(cFieldName, cInitiator);
+				TempRecipe.SetNiceName(cNiceName);
+				TempRecipe.SetDBTable(ECurrency_DBTable);
+				TempRecipe.NotCraftable = true;
+				TempRecipe.Validate();
+			}
+		}
+	}
+
+	//setup freeday recipe.
+	TempRecipe = Recipe("Freeday", cInitiator);
+	TempRecipe.SetNiceName("Freeday");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.Time = 3.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredCurrencyGuardCoins = 250;
+	TempRecipe.Validate();
+
+
+	//setup 
+	TempRecipe = Recipe("Healthshot", cInitiator);
+	TempRecipe.SetNiceName("Healthshot");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.SoundType = 1;
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 15.0;
+	TempRecipe.Returns = 2;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredPlatinum = 20;
+	TempRecipe.RequiredMedical = 4;
+	TempRecipe.Validate();
+
+
+
+	//setup 
+	TempRecipe = Recipe("Tank", cInitiator);
+	TempRecipe.SetNiceName("Tank");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.Time = 60.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.RequiredTeamActivation = CS_TEAM_T;
+	TempRecipe.Illegal = true;
+	//ingredients
+	TempRecipe.RequiredStrengthSerum = 5;
+	TempRecipe.RequiredKevlar = 3;
+	TempRecipe.Validate();
+
+	//setup 
+	TempRecipe = Recipe("Heavy", cInitiator);
+	TempRecipe.SetNiceName("Heavy");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.Time = 30.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.RequiredTeamActivation = CS_TEAM_T;
+	TempRecipe.Illegal = true;
+	//ingredients
+	TempRecipe.RequiredStrengthSerum = 1;
+	TempRecipe.RequiredKevlar = 2;
+	TempRecipe.Validate();
+
+	//setup 
+	TempRecipe = Recipe("carepackage", cInitiator);
+	TempRecipe.SetNiceName("Carepackage");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.RequiredTeamActivation = CS_TEAM_T;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.Illegal = false;
+	TempRecipe.Time = 20.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredCurrencyGuardCoins = 400;
+	TempRecipe.Validate();
+
+	//setup 
+	TempRecipe = Recipe("lootpackage", cInitiator);
+	TempRecipe.SetNiceName("Lootpackage");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.RequiredTeamActivation = CS_TEAM_T;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = false;
+	TempRecipe.Time = 20.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredCurrencyPlatinum = 40;
+	TempRecipe.Validate();
+
+
+	//setup 
+	TempRecipe = Recipe("partycrate", cInitiator);
+	TempRecipe.SetNiceName("Party crate");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.NotCraftable = true;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = false;
+	TempRecipe.Time = 0.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	TempRecipe.Validate();
+
+	//setup 
+	TempRecipe = Recipe("seedgift", cInitiator);
+	TempRecipe.SetNiceName("Seed reward package");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = true;
+	TempRecipe.NotCraftable = true;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.Time = 0.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	TempRecipe.Validate();
+
+	//setup 
+	TempRecipe = Recipe("xmasgift_small", cInitiator);
+	TempRecipe.SetNiceName("Christmas gift (small)");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.NotCraftable = true;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = false;
+	TempRecipe.Time = 0.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	TempRecipe.RequiredCurrencyPlatinum = 2;
+	TempRecipe.Validate();
+	
+	//setup 
+	TempRecipe = Recipe("xmasgift_big", cInitiator);
+	TempRecipe.SetNiceName("Christmas gift (big)");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.NotCraftable = true;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = false;
+	TempRecipe.Time = 0.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	TempRecipe.RequiredCurrencyPlatinum = 10;
+	TempRecipe.Validate();
+
+	//setup 
+	TempRecipe = Recipe("easter_egg", cInitiator);
+	TempRecipe.SetNiceName("Easter egg");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.NotCraftable = true;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = false;
+	TempRecipe.Time = 0.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	TempRecipe.RequiredCurrencyPlatinum = 20;
+	TempRecipe.Validate();
+
+
+	//setup 
+	TempRecipe = Recipe("Antiserum", cInitiator);
+	TempRecipe.SetNiceName("Antiserum");
+	TempRecipe.SetDBTable("inilo_crafting_collectables");
+	TempRecipe.Collectable = true;
+	Format(cDescription, sizeof(cDescription), "Can be acquired by healing from poison\nCan be used to craft anti-serums (heal instantly from poison)");
+	TempRecipe.SetDescription(cDescription);
+	TempRecipe.Validate();
+
+
+	//setup 
+	TempRecipe = Recipe("StrengthSerum", cInitiator);
+	TempRecipe.SetNiceName("Strength Serum");
+	TempRecipe.SetDBTable("inilo_crafting_collectables");
+	TempRecipe.Collectable = true;
+	Format(cDescription, sizeof(cDescription), "Can be acquired by killing things that have 1000HP or higher, and is used to craft tanks and heavies");
+	TempRecipe.SetDescription(cDescription);
+	TempRecipe.Validate();
+
+	//setup 
+	//no clue what this will do, MrGibby will probably know
+	TempRecipe = Recipe("luckpotion", cInitiator);
+	TempRecipe.SetNiceName("Luck Potion");
+	TempRecipe.SetDBTable("inilo_crafting_collectables");
+	TempRecipe.Collectable = true;
+	for(ERawMaterial rawmaterial = RawMaterial_Gold;rawmaterial <= RawMaterial_Fiber;rawmaterial++)
+	{
+		TempRecipe.SetRawMaterialRequired(rawmaterial, ERarity_AmountsContent[Rarity_Legendary]);
+	}
+	//Format(cDescription, sizeof(cDescription), "Ask TripW0W");
+	//TempRecipe.SetDescription(cDescription);
+	TempRecipe.Validate();
+
+	//setup 
+	TempRecipe = Recipe("wardenbadge", cInitiator);
+	TempRecipe.SetNiceName("Warden badge");
+	TempRecipe.SetDBTable("inilo_crafting_collectables");
+	TempRecipe.Collectable = true;
+	Format(cDescription, sizeof(cDescription), "Can be acquired by being a warden in successfull rounds\nCan be used as currency for some special things");
+	TempRecipe.SetDescription(cDescription);
+	TempRecipe.Validate();
+
+
+	//setup 
+	TempRecipe = Recipe("bomb", cInitiator);
+	TempRecipe.SetNiceName("Bomb");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = true;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = false;
+	TempRecipe.Time = 15.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.RequiredTeamActivation = CS_TEAM_T;
+	TempRecipe.Illegal = true;
+	//ingredients
+	TempRecipe.RequiredElectronicPart = 1;
+	TempRecipe.RequiredExplosivePart = 3;
+	TempRecipe.Validate();
+
+	//setup 
+	TempRecipe = Recipe("mine", cInitiator);
+	TempRecipe.SetNiceName("Mine");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = true;
+	TempRecipe.Illegal = true;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = false;
+	TempRecipe.Time = 20.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.RequiredTeamActivation = CS_TEAM_T;
+	TempRecipe.Illegal = true;
+	//ingredients
+	TempRecipe.RequiredElectronicPart = 1;
+	TempRecipe.RequiredExplosivePart = 3;
+	TempRecipe.Validate();
+
+	//setup 
+	TempRecipe = Recipe("flashbang", cInitiator);
+	TempRecipe.SetNiceName("Flashbang");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.Time = 4.0;
+	TempRecipe.Returns = 4;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredExplosivePart = 1;
+	TempRecipe.RequiredCartridge = 4;
+	TempRecipe.Validate();
+
+	//setup 
+	TempRecipe = Recipe("grenade", cInitiator);
+	TempRecipe.SetNiceName("HE grenade");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = true;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 5.0;
+	TempRecipe.Returns = 2;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredExplosivePart = 1;
+	TempRecipe.RequiredCartridge = 4;
+	TempRecipe.Validate();
+
+
+	//setup 
+	TempRecipe = Recipe("molotov", cInitiator);
+	TempRecipe.SetNiceName("Molotov");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.SoundType = 1;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = true;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = false;
+	TempRecipe.Time = 5.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredExplosivePart = 1;
+	TempRecipe.RequiredCartridge = 1;
+	TempRecipe.Validate();
+
+
+	//setup 
+	TempRecipe = Recipe("smoke", cInitiator);
+	TempRecipe.SetNiceName("Smoke grenade");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.SoundType = 1;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 7.0;
+	TempRecipe.Returns = 2;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredPyrophoric = 1;
+	TempRecipe.RequiredMedical = 2;
+	TempRecipe.RequiredCartridge = 2;
+	TempRecipe.Validate();
+
+
+	//setup 
+	TempRecipe = Recipe("armor", cInitiator);
+	TempRecipe.SetNiceName("Body armor");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 3.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredKevlar = 3;
+	TempRecipe.Validate();
+
+
+	//setup 
+	TempRecipe = Recipe("helmet", cInitiator);
+	TempRecipe.SetNiceName("Helmet + body armor");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = false;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 3.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredKevlar = 5;
+	TempRecipe.Validate();
+
+	//setup 
+	TempRecipe = Recipe("usp", cInitiator);
+	TempRecipe.SetNiceName("USP");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = true;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 20.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredWeaponPart = 2;
+	TempRecipe.RequiredAmmunition= 1;
+	TempRecipe.Validate();
+
+
+	//setup 
+	TempRecipe = Recipe("P250", cInitiator);
+	TempRecipe.SetNiceName("P250");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = true;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 20.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredWeaponPart = 2;
+	TempRecipe.RequiredAmmunition= 1;
+	TempRecipe.Validate();
+
+
+	//setup 
+	/*
+	TempRecipe = Recipe("P250_test", cInitiator);
+	TempRecipe.SetNiceName("P250_test");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = true;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = true;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = true;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 20.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredCurrencyPlatinum = 1;
+	TempRecipe.Validate();
+	*/
+
+	/*
+	p250 has a raw material cost of gold -> 12
+	p250 has a raw material cost of iron -> 124
+	p250 has a raw material cost of silver -> 0
+	p250 has a raw material cost of copper -> 48
+	p250 has a raw material cost of platinum -> 0
+	p250 has a raw material cost of phosphorus -> 16
+	p250 has a raw material cost of penicillin -> 0
+	p250 has a raw material cost of fiber -> 0
+	*/
+
+
+	//setup 
+	TempRecipe = Recipe("mac10", cInitiator);
+	TempRecipe.SetNiceName("MAC-10");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = true;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 20.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredWeaponPart = 2;
+	TempRecipe.RequiredAmmunition= 2;
+	TempRecipe.Validate();
+
+
+	//setup 
+	TempRecipe = Recipe("ump", cInitiator);
+	TempRecipe.SetNiceName("UMP-45");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = true;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 20.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredWeaponPart = 2;
+	TempRecipe.RequiredAmmunition= 2;
+	TempRecipe.Validate();
+
+
+
+	//setup 
+	TempRecipe = Recipe("AK47", cInitiator);
+	TempRecipe.SetNiceName("AK-47");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = true;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 20.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredWeaponPart = 3;
+	TempRecipe.RequiredAmmunition= 2;
+	TempRecipe.Validate();
+
+
+	//setup 
+	TempRecipe = Recipe("M4A1", cInitiator);
+	TempRecipe.SetNiceName("M4A1-S");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = true;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 20.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredWeaponPart = 3;
+	TempRecipe.RequiredAmmunition= 2;
+	TempRecipe.Validate();	
+
+	//setup 
+	TempRecipe = Recipe("M4A4", cInitiator);
+	TempRecipe.SetNiceName("M4A4");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = true;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 20.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredWeaponPart = 3;
+	TempRecipe.RequiredAmmunition = 2;
+	TempRecipe.Validate();
+
+	//setup 
+	TempRecipe = Recipe("AWP", cInitiator);
+	TempRecipe.SetNiceName("AWP");
+	TempRecipe.SetDBTable("inilo_crafting_inventory");
+	TempRecipe.Dev = DEV_LOCKDOWN;
+	TempRecipe.RequiredTeamCrafting = CS_TEAM_T;
+	TempRecipe.NotCraftable = false;
+	TempRecipe.NotUsable = false;
+	TempRecipe.Delicate = false;
+	TempRecipe.Illegal = true;
+	TempRecipe.CanBeActivatedWhenCraftingIsDisabled = true;
+	TempRecipe.FreeInWarmup = true;
+	TempRecipe.Time = 20.0;
+	TempRecipe.Returns = 1;
+	TempRecipe.Item = true;
+	//ingredients
+	TempRecipe.RequiredWeaponPart = 5;
+	TempRecipe.RequiredAmmunition= 3;
+	TempRecipe.Validate();
+
+	LockAndValidateAllRecipes();
+	//Set the cookie menu's.
+	SetCookieMenuItem(ShowUpgradesSettingsMenuHandler, 0, "[CRAFTING] Upgrade settings (turn upgrades on/off)");
+	
+
+	PrintToConsoleiNilo("[recipes] setup done");
+	//--- setup upgrade.
+	g_bBlockUpgrades = false;
+
+
+	//setup 
+	Upgrade SetupUpgrade = Upgrade("10HPA", cInitiator);
+	SetupUpgrade.SetNiceName("10 HP upgrade");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 6000;
+	Format(cDescription, sizeof(cDescription), "Increases your max HP with 10 (stacks)");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("10HPB", cInitiator);
+	SetupUpgrade.SetNiceName("10 HP upgrade");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.HasDepency = true;
+	SetupUpgrade.Depency = Upgrade("10HPA", cInitiator);
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 100000;
+	Format(cDescription, sizeof(cDescription), "Increases your max HP with 10 (stacks)");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("10ARMOR", cInitiator);
+	SetupUpgrade.SetNiceName("10 Kevlar upgrade");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 4500;
+	Format(cDescription, sizeof(cDescription), "You will receive 10 kevlar (body armor) upon spawning (protip: armor removes aimpunch)");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+	
+	SetupUpgrade = Upgrade("LOOTSHARE", cInitiator);
+	SetupUpgrade.SetNiceName("Loot bonus awards");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 6000;
+	Format(cDescription, sizeof(cDescription), "You will receive upto 25%% bonus from a lootbag a guard dropped that you killed and someone else grabbed (10%% for an assist)");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("healthregena", cInitiator);
+	SetupUpgrade.SetNiceName("Guard basic self health regeneration (1hp/sec)");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyGuardCoins = 5000;
+	Format(cDescription, sizeof(cDescription), "Regenenate health on yourself at a rate of 1hp/sec");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("healthregenb", cInitiator);
+	SetupUpgrade.SetNiceName("Guard upgraded health regeneration (others + yourself 5hp/sec)");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = false;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyGuardCoins = 10000;
+	SetupUpgrade.HasDepency = true;
+	SetupUpgrade.Depency = Upgrade("healthregena", cInitiator);
+	Format(cDescription, sizeof(cDescription), "Regenenate health on yourself at a rate of 5hp/sec\nHeals closeby guards\nHeals prisoners when you are warden and you pull your knife out");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("rebreather", cInitiator);
+	SetupUpgrade.SetNiceName("Rebreather system");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 3000;
+	SetupUpgrade.HasDepency = false;
+	Format(cDescription, sizeof(cDescription), "Allows you to stay underwater for longer periods of time\n(this will also allow you to dive in pools you otherwise die in)");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+
+	SetupUpgrade = Upgrade("rebreatherstealth", cInitiator);
+	SetupUpgrade.SetNiceName("Rebreather stealth system");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 3000;
+	SetupUpgrade.HasDepency = true;
+	SetupUpgrade.Depency = Upgrade("rebreather", cInitiator);
+	Format(cDescription, sizeof(cDescription), "Adds the stealth upgrade (not invisible) to your rebreather, this makes it very hard to spot you if you don't move underwater\nnote: this does not hide your weapons");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+
+	SetupUpgrade = Upgrade("lastguardturret", cInitiator);
+	SetupUpgrade.SetNiceName("Last guard turret support");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.HasSetting = true;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 1000;
+	Format(cDescription, sizeof(cDescription), "Spawns turrets when you claim last");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+
+	SetupUpgrade = Upgrade("lastguardturretboost", cInitiator);
+	SetupUpgrade.SetNiceName("Last guard turret support [boost]");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 3000;
+	SetupUpgrade.HasDepency = true;
+	SetupUpgrade.Depency = Upgrade("lastguardturret", cInitiator);
+	Format(cDescription, sizeof(cDescription), "Boosts the damage and the HP of the turrets");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+
+	SetupUpgrade = Upgrade("extinguisher", cInitiator);
+	SetupUpgrade.SetNiceName("Portable Extinguisher");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = false;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = false;
+	SetupUpgrade.Amount = 20;
+	SetupUpgrade.RequiredCurrencyGuardCoins = 250;
+	SetupUpgrade.HasDepency = false;
+	SetupUpgrade.HasSetting = true;
+	Format(cDescription, sizeof(cDescription), "automatically extinguishes fire as guard");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+
+	SetupUpgrade = Upgrade("pouch", cInitiator);
+	SetupUpgrade.SetNiceName("Little pouch");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.HasSetting = true;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 25000;
+	SetupUpgrade.HasDepency = false;
+	Format(cDescription, sizeof(cDescription), "Allows you to hide your nasty little things :)");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	/*
+	https://forums.alliedmods.net/showthread.php?t=317258&page=2
+	Multi-Quote This Message Quick reply to this message #14
+	The concept is to track all shield entitys that are created.
+	Everytime a player shoots (you would hook pre and post) and check if any of the shield entitys have taken more damage.
+	You make the shield have a really high "damage to break" value by setting it to start with -999999.
+	Then if the last person to shoot was a teammate with the owner of the shield it wouldn't count.
+	You manually add up non teammate's causing damage this way until sv_shield_hitpoints is reached.
+	Then you force the damage to the value of sv_shield_hitpoints to break the shield like normal.
+	This method should work pretty well as i couldn't get any of the entity hooks on damage to work. The Event_WeaponFire I use in this example is 1 bullet too late.
+
+	*/
+	SetupUpgrade = Upgrade("riotshield", cInitiator);
+	SetupUpgrade.SetNiceName("Guard riot shield");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = false;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyGuardCoins = 10000;
+	SetupUpgrade.HasDepency = false;
+	Format(cDescription, sizeof(cDescription), "Lets you spawn with a guard shield");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+	SetCookieMenuItem(CookieMenuShowShieldSettingsMenuHandler, 0, "[CRAFTING] Riot shield settings");
+/*
+SELECT * FROM `inilo_crafting_upgrades` WHERE `riotshield` = 1
+UPDATE inilo_crafting_currency SET guardcoins = guardcoins + 3000 WHERE AccountID IN (SELECT AccountID FROM `inilo_crafting_upgrades` WHERE `riotshield` = 1)
+UPDATE inilo_crafting_currency SET loyaltycoins = loyaltycoins - 3000 WHERE AccountID IN (SELECT AccountID FROM `inilo_crafting_upgrades` WHERE `riotshield` = 1)
+*/
+
+	SetupUpgrade = Upgrade("kits", cInitiator);
+	SetupUpgrade.SetNiceName("Personal armory (guard kits)");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.HasSetting = false;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = false;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyGuardCoins = 2500;
+	SetupUpgrade.HasDepency = false;
+	Format(cDescription, sizeof(cDescription), "Allows you to equip prefedined or custom kits");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("ata", cInitiator);
+	SetupUpgrade.SetNiceName("Advanced Threat Analysis");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.HasSetting = false;
+	SetupUpgrade.Dev = true;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 100000;
+	SetupUpgrade.HasDepency = false;
+	Format(cDescription, sizeof(cDescription), "Advanced Threat Analysis");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetCookieMenuItem(CookieMenuShowATASettingsMenuHandler, 0, "[CRAFTING] Advanced Threat Analysis settings");
+
+	//ata 
+	/*
+	Detect when aiming at guard (with gun)
+	Detect incomming nade.
+	Detect delayed bomb
+	Detect pouched weapons.
+	Detect closeby bomb
+	*/
+
+	SetupUpgrade = Upgrade("atp", cInitiator);
+	SetupUpgrade.SetNiceName("Advanced Threat Protection");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.HasSetting = false;
+	SetupUpgrade.Dev = true;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 100000;
+	SetupUpgrade.HasDepency = true;
+	SetupUpgrade.Depency = Upgrade("ata", cInitiator);
+	Format(cDescription, sizeof(cDescription), "Advanced Threat Protection");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("grenadeassist", cInitiator);
+	SetupUpgrade.SetNiceName("Grenade assist system");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.HasSetting = true;
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 1000;
+	SetupUpgrade.HasDepency = false;
+	Format(cDescription, sizeof(cDescription), "Helps you to visualize where your grenades will go");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+
+	SetupUpgrade = Upgrade("binoculars", cInitiator);
+	SetupUpgrade.SetNiceName("Binoculars");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 10000;
+	Format(cDescription, sizeof(cDescription), "A pair of binoculars, you can use your binoculars by 'sm_binoculars' or 'binoculars' or 'bino' (protip: bind y binoculars)");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("nightvision", cInitiator);
+	SetupUpgrade.SetNiceName("Nightvison goggles (consumer grade)");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 1000;
+	Format(cDescription, sizeof(cDescription), "A pair of nightvision goggles, you can use your nightvision by 'sm_nightvision' or 'nightvision' or 'nv' (protip: bind n nightvision )");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("nightvision_milspec", cInitiator);
+	SetupUpgrade.SetNiceName("Nightvison goggles (military grade)");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = true;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.HasDepency = true;
+	SetupUpgrade.Depency = Upgrade("nightvision", cInitiator);
+	SetupUpgrade.HasSetting = true;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 5000;
+	Format(cDescription, sizeof(cDescription), "Upgraded night vision goggles to military specifications");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("sunglasses", cInitiator);
+	SetupUpgrade.SetNiceName("sunglasses");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = true;
+	SetupUpgrade.Permanent = false;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = false;
+	SetupUpgrade.Amount = 250;
+	SetupUpgrade.RequiredCurrencyGuardCoins = 100;
+	SetupUpgrade.HasSoftDepency = true;
+	SetupUpgrade.SoftDepency = Upgrade("nightvision", cInitiator);
+	SetupUpgrade.HasSetting = true;
+	Format(cDescription, sizeof(cDescription), "1 pair of sunglasses protects against 5 seconds of flashbangs");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+
+	SetupUpgrade = Upgrade("flashlight", cInitiator);
+	SetupUpgrade.SetNiceName("Flashlight");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Refundable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyLoyaltyCoins = 1000;
+	Format(cDescription, sizeof(cDescription), "A flashlight you can use your flashlight by pressing the inspect weapon button (you can disable this in /settings) or binding 'sm_flashlight'");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("martyrdom", cInitiator);
+	SetupUpgrade.SetNiceName("Martyrdom");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.HasSetting = true;
+	SetupUpgrade.Dev = true;
+	SetupUpgrade.Permanent = false;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Amount = 50;
+	SetupUpgrade.RequiredCurrencyPlatinum = 25;
+	Format(cDescription, sizeof(cDescription), "When killed & close to an enemy, you will drop a live grenade.");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("grenadeboost", cInitiator);
+	SetupUpgrade.SetNiceName("Boost grenade damage");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.HasSetting = true;
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = false;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Amount = 50;
+	SetupUpgrade.RequiredCurrencyPlatinum = 25; //25
+	Format(cDescription, sizeof(cDescription), "Your grenades damage will be boosted (damage multiplier: %.2f, radius multiplier: %.2f)", GRENADEBOOST_DAMAGE, GRENADEBOOST_RADIUS);
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("instaknife", cInitiator);
+	SetupUpgrade.SetNiceName("Instant knife kills");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.HasSetting = true;
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = false;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Amount = 10;
+	SetupUpgrade.RequiredCurrencyPlatinum = 100; //25
+	Format(cDescription, sizeof(cDescription), "Every enemy that you knife will instantly die.");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("CellEscaper", cInitiator);
+	SetupUpgrade.SetNiceName("Cell escaper");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = false;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Amount = 5;
+	SetupUpgrade.RequiredCurrencyPlatinum = 50;
+	Format(cDescription, sizeof(cDescription), "You can activate a cell escaper once per round before the cells open. (sm_cellescaper / sm_celltp / sm_escapecells) ");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("sledgehammer", cInitiator);
+	SetupUpgrade.SetNiceName("Sledgehammer");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.HasSetting = true;
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = false;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Amount = 100;
+	SetupUpgrade.RequiredCurrencyPlatinum = 50;
+	Format(cDescription, sizeof(cDescription), "Instantly open any breakable object");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("powertoss", cInitiator);
+	SetupUpgrade.SetNiceName("Power toss");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.HasSetting = true;
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = false;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Amount = 25;
+	SetupUpgrade.RequiredCurrencyPlatinum = 50;
+	Format(cDescription, sizeof(cDescription), "Throw bombs/mines very far");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+
+	SetupUpgrade = Upgrade("market", cInitiator);
+	SetupUpgrade.SetNiceName("Market license");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.License = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyPlatinum = 40;
+	Format(cDescription, sizeof(cDescription), "Grants you access to the market");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	/*
+	SetupUpgrade = Upgrade("transfer", cInitiator);
+	SetupUpgrade.SetNiceName("Transfer license");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = true;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.License = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.HasDepency = true;
+	SetupUpgrade.Depency = Upgrade("market", cInitiator);
+	SetupUpgrade.RequiredCurrencyPlatinum = 40;
+	Format(cDescription, sizeof(cDescription), "Grants you access to transfers (you can transfer/send over currency to other players with a transfer license)");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+	*/
+
+	SetupUpgrade = Upgrade("poacher", cInitiator);
+	SetupUpgrade.SetNiceName("Poacher license");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.License = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyGuardCoins = 3000;
+	Format(cDescription, sizeof(cDescription), "Grants you access to hunt all sorts of animals, like elephants, racoons, or bunnies\nbut don't hurt the chickens please, thanks.");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+
+	//medicalstudent
+	SetupUpgrade = Upgrade("medicalstudent", cInitiator);
+	SetupUpgrade.SetNiceName("Medical student license");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = DEV_LOCKDOWN;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.License = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.HasSoftDepency = true;
+	SetupUpgrade.SoftDepency = Upgrade("healthregenb", cInitiator);
+	SetupUpgrade.RequiredCurrencyGuardCoins = 3000;
+	SetupUpgrade.RequiredCurrencyPlatinum = 1000;
+	Format(cDescription, sizeof(cDescription), "Grants you a medical student license, allows you to gain experience to become a medical doctor");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("medicaldoctor", cInitiator);
+	SetupUpgrade.SetNiceName("Medical doctor license");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = true;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.License = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.HasDepency = true;
+	SetupUpgrade.Depency = Upgrade("medicalstudent", cInitiator);
+	SetupUpgrade.RequiredXPMedical = (XP_HP_OF_PLAYER * XP_AMOUNT_OF_PLAYERS_TO_HEAL);
+	Format(cDescription, sizeof(cDescription), "Grants you a medical doctor license, allows you to heal combat wounds");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+	SetupUpgrade = Upgrade("Shinobi-iri", cInitiator);
+	SetupUpgrade.SetNiceName("Shinobi-iri");
+	SetupUpgrade.SetDBTable("inilo_crafting_upgrades");
+	SetupUpgrade.Dev = true;
+	SetupUpgrade.Permanent = true;
+	SetupUpgrade.License = true;
+	SetupUpgrade.Purchasable = true;
+	SetupUpgrade.Amount = 1;
+	SetupUpgrade.RequiredCurrencyPlatinum = 1000;
+	Format(cDescription, sizeof(cDescription), "Learn the way of the ninja by only killing silently");
+	SetupUpgrade.SetDescription(cDescription);
+	SetupUpgrade.Validate();
+
+
+
+	//g_bBlockUpgrades = true;
+	LockAndValidateAllUpgrades();
+
+	PrintToConsoleiNilo("[upgrades] setup done");
