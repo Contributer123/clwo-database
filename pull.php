@@ -4,7 +4,7 @@
   $result = array();
   chdir('/var/www/html');
   echo "Path after changing dir: " .getcwd();
-  $output = shell_exec('./shell_script.sh');
+  $output = shell_exec('./pull_script.sh');
   echo $output;
   $output = exec('cat "helloe"');
   echo $output;
