@@ -18,7 +18,7 @@ if (is_dir($dir)){
   $result = array();
   chdir('/home/pi/Desktop');
   echo "Path after changing dir: " .getcwd();
-  $output = shell_exec('/home/pi/Desktop/pull_script.sh');
+  $output = shell_exec('cd /home/pi/Desktop/ && sudo pull_script.sh');
   echo $output;
   $output = shell_exec('cat "helloe"');
   echo "here.sth.".$output;
