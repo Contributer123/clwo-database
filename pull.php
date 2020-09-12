@@ -1,5 +1,5 @@
 <?php
-  echo "Testing Pull Script:"
+  echo "Testing Pull Script:";
   echo "<pre>";
   $result = array();
   chdir('/var/www/html');
