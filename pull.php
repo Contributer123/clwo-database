@@ -21,7 +21,8 @@ if (is_dir($dir)){
   $output = shell_exec('cd /home/pi/Desktop/ && sudo pull_script.sh');
   echo $output;
   exec('cat "helloe"', $output);
-  echo "here.sth.".$output;
+  print_r($output);
+  
   echo "<pre>";
 ?>
 
