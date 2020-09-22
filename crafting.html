@@ -368,12 +368,34 @@ let text_box = document.getElementById("needed_stuff_to_craft");
 let level = 0;
 let tree_data = [{}];
 let downloaded_data = "";
+download_recipes();
+
+function download_recipes(){
+ recipes = [];
+ fetch("https://clwo.eu/jailbreak/api/v2/craftingrecipes.php")
+  .then(function(response) {
+    return response.json();
+  })
+  .then(
+  function(content)
+  {
+    for(let i = 0; i < content.data.length; i++)
+    {
+        let single_rec = content.data[i];
+        debugger;
+        console.log(single_rec["NiceName"]);
+    }
+    
+  });
+}
+
 
 function add(text)
 {
 let pre_text = (level > 0) ? "<span style='color:red;'>"+ ">".repeat(level) + "</span>" : "";
   text_box.innerHTML += "<div>"+ pre_text + text + "</div>";  
 }
+
 function download_data(url){
  
   fetch(url)
@@ -387,6 +409,7 @@ function download_data(url){
     download_finished_function(content);
   });
 }
+
 function download_finished_function(content) {
   
     document.getElementById("craftable_items").innerHTML = "";
