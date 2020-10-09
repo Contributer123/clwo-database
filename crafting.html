@@ -368,7 +368,7 @@ let text_box = document.getElementById("needed_stuff_to_craft");
 let level = 0;
 let tree_data = [{}];
 let downloaded_data = "";
-download_recipes();
+//download_recipes();
 
 function download_recipes(){
  recipes = [];
@@ -379,6 +379,7 @@ function download_recipes(){
   .then(
   function(content)
   {
+  debugger;
     for(let i = 0; i < content.data.length; i++)
     {
         let single_rec = content.data[i];
