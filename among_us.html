@@ -1,21 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>AMONG US OVERVIEW</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
+    <style>   
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    main {
+      flex: 1 0 auto;
+    }
+    </style> 
+     
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="blue lighten-5" id="index-banner">
+      <h1 class="header center blue-text">Among US Maps</h1>
+  </div>
+
+
+  <div class="blue lighten-5">
+    <div class="section">
+      <div class="row">
+          <div class="col xl6 l6 m6 s6">
+            <h3 class="center-align blue-text">The Skeld</h3>
+            <img class="materialboxed center-align" src="/images/among_us/i1.jpg" id="responsive-image"> 
+          </div>
+          <div class="col xl6 l6 m6 s6">
+            <h3 class="center-align blue-text">Mira HQ</h3>          
+            <img class="materialboxed center-align" src="/images/among_us/i2.jpg" id="responsive-image"> 
+          </div>
+      </div>
+      <div class="row">
+          <div class="col xl6 l6 m6 s6">
+            <h3 class="center-align blue-text">Polus</h3>          
+            <img class="materialboxed center-align" src="/images/among_us/i3.jpg" id="responsive-image"> 
+          </div>
+          <div class="col xl6 l6 m6 s6">
+            <h3 class="center-align blue-text">Crew</h3>                    
+            <img class="materialboxed center-align" src="/images/among_us/i5.jpg" id="responsive-image"> 
+          </div>          
+      </div>
+    </div>
+    <div class="section">
+      <div class="row">
+        <div class="col xl3 l4 m6 s6">
+          <h3 class="center-align blue-text">Settings</h3>                    
+          <img class="materialboxed center-align" src="/images/among_us/i4.jpg" id="responsive-image"> 
+        </div>  
+      </div>
+    </div>
+  </div>
+      
+
+
+
+  <footer class="page-footer blue">
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="https://steamcommunity.com/id/IAmFat__/" target="_blank">IAmFat</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  </body>
+</html>
+
+  <script>
+  $.get("navigation.html", function(data){
+      $("#nav-placeholder").replaceWith(data);
+  });
+
+  $('.materialboxed').materialbox();
+  $('.slider').slider({full_width: true});
+
+       
+  </script>
 <style>
   img {
     width: 100%;
-    max-width: 1280px;
   }
 </style>
-<h1>Among Us Helper Page</h1>
-<img src="/images/among_us/i1.jpg" id="responsive-image"> 
-<div style="height:50px;"></div>
 
-<img src="/images/among_us/i2.jpg" id="responsive-image"> 
-<div style="height:50px;"></div>
-
-<img src="/images/among_us/i3.jpg" id="responsive-image"> 
-<div style="height:50px;"></div>
-
-<img src="/images/among_us/i4.jpg" id="responsive-image"> 
-<div style="height:50px;"></div>
-
-<img src="/images/among_us/i5.jpg" id="responsive-image"> 
-<div style="height:50px;"></div>
