@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <meta name="description" content="A Non clwo affiliated web crawler">
+
+  <title>Starter Template - Materialize</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" integrity="sha512-CwHUCK55pONjDxvPZQeuwKpxos8mPyEv9gGuWC8Vr0357J2uXg1PycGDPND9EgdokSFTG6kgSApoDj9OM22ksw==" crossorigin="anonymous"></script>    
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style>   
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    main {
+      flex: 1 0 auto;
+    }
+    </style> 
+     
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="section blue lighten-5" id="index-banner">
+    <div class="container">
+      <h1 id="staff_content" class="header center blue-text"></h1>
+      <div class="row center">   
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  <footer class="page-footer blue">
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="https://steamcommunity.com/id/IAmFat__/" target="_blank">IAmFat</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  </body>
+</html>
+
+
+
+<script>
+  
+//https://clwo.eu/jailbreak/api/v2/accounthelper.php?AccountID=204683819  
+  
+let staff_data_filtered;
+
+download_data("https://staff-api.aimless.eu/changes");
+
+function download_data(url){
+ 
+  fetch(url)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(rec_data) {
+    let total_entries = rec_data.data.length;
+    // Sort all entries by Date
+    rec_data.data.forEach(function(el) {      
+      el.history.sort(function(a,b) { return a.date - b.date;});
+      // Add Date as string
+      el.history.forEach(function(el){el["date_s"] = new Date(el.date*1000);})
+      });
+    // Remove non Staff (Non active Staff, Remove Guardians)
+    rec_data.data = rec_data.data.filter(function(val) { 
+        let curr_rank = val.history[val.history.length-1].new_rank ;
+        if(curr_rank == "normal" || curr_rank == "guardian" || curr_rank == "default")
+        {
+          return false;
+        }
+        
+        // Fix some typos from api, we like big letters :)
+        if(val.history[val.history.length-1].new_rank == "senators")
+          val.history[val.history.length-1].new_rank = "Senator";
+        if(val.history[val.history.length-1].new_rank == "senior admin")
+          val.history[val.history.length-1].new_rank = "Senior Admin";          
+        if(val.history[val.history.length-1].new_rank == "trial moderator")
+          val.history[val.history.length-1].new_rank = "Trial Moderator";          
+        
+          
+          
+        return true;     
+      });
+    let filtered_length = rec_data.data.length;
+    /*rec_data.data.forEach(function(el) {
+      console.log(el.history);
+    });*/
+    staff_data_filtered = rec_data.data;
+    //console.log("Original: " + total_entries + " Filtered:" + filtered_length);
+    get_random_staff_info();
+
+  });;
+}
+
+function get_random_staff_info()
+{
+  let random_staff_number = Math.round(Math.random()*(staff_data_filtered.length - 1));
+  let staff_info = staff_data_filtered[random_staff_number];
+  // Get Staff Data from CLWO Database
+  
+    fetch("https://clwo.eu/jailbreak/api/v2/accounthelper.php?SteamID3="+staff_info.steamid).then(function(response) {
+      return response.json();
+    })
+    .then(function(rec_data) {
+       let username = rec_data.SteamData.personaname;
+       let profile_pic_url = rec_data.SteamData.avatarfull;
+       let last_promotion_data = staff_info.history[staff_info.history.length-1];
+       let days_since_rank = Math.round(new Date(new Date() - new Date(1000*last_promotion_data.date))/(1000*60*60*24));
+       let new_rank = last_promotion_data.new_rank[0].toUpperCase() + last_promotion_data.new_rank.substring(1); 
+       let desc =  username + " has been " + new_rank  + " for " + days_since_rank + " days :)";
+      
+       document.title = desc
+       document.head.querySelector('meta[name="description"]').content = desc;
+       document.getElementById("staff_content").innerHTML = desc;
+
+
+  });;
+  
+  
+  
+}
+  </script>
+  <script>
+  $.get("navigation.html", function(data){
+      $("#nav-placeholder").replaceWith(data);
+  });
+  </script>
