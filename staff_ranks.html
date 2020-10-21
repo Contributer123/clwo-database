@@ -33,7 +33,7 @@
     <div class="container">
       <h1 id="staff_content" class="header center blue-text"></h1>
         <div class="row center">  </div>
-        <span onclick="get_random_staff_info();" style="font-size: 5vh; background: white; padding: 10px; border: 2px solid black; border-radius: 20px; margin: 20px;">REROLL</span>
+        <span onclick="get_random_staff_info();" style="cursor: pointer;font-size: 5vh; background: white; padding: 10px; border: 2px solid black; border-radius: 20px; margin: 20px;">REROLL</span>
       </div>
 
     </div>
@@ -130,7 +130,7 @@ function get_random_staff_info()
        let new_rank = last_promotion_data.new_rank[0].toUpperCase() + last_promotion_data.new_rank.substring(1); 
        let desc =  username + " has been " + new_rank  + " for " + days_since_rank + " days :)";
       
-       document.title = desc
+       //document.title = desc
        document.head.querySelector('meta[name="description"]').content = desc;
        document.getElementById("staff_content").innerHTML = desc;
 
