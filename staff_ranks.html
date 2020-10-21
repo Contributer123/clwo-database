@@ -115,9 +115,7 @@ function download_data(url){
           val.history[val.history.length-1].new_rank = "Senior Moderator";          
         if(val.history[val.history.length-1].new_rank == "trial moderator")
           val.history[val.history.length-1].new_rank = "Trial Moderator";          
-        
-          
-          
+         
         return true;     
       });
     let filtered_length = rec_data.data.length;
@@ -143,8 +141,17 @@ function get_random_staff_info()
     .then(function(rec_data) {
        let username = rec_data.SteamData.personaname;
        let profile_pic_url = rec_data.SteamData.avatarfull;
-       let last_promotion_data = staff_info.history[staff_info.history.length-1];
+       let last_promotion_data = staff_info.history[staff_info.history.length-1];       
        let days_since_rank = Math.round(new Date(new Date() - new Date(1000*last_promotion_data.date))/(1000*60*60*24));
+       // User with steamid 76561199063775780 got her account demoted and promoted into a new account
+       // the first promotion to S.A. had been 05.12.2019-19.06.2020 and than the switch to a different account
+       // Thats why we add here 197 days to it, noone is going to read this anyway so wtf, why do you read this crappy written code
+       if(staff_info.steamid == "76561199063775780")
+       {
+         days_since_rank += 197;
+       }
+       
+       
        let new_rank = last_promotion_data.new_rank[0].toUpperCase() + last_promotion_data.new_rank.substring(1); 
        let desc =  username + " has been " + new_rank  + " for " + days_since_rank + " days :)";
       
