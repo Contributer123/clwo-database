@@ -63,13 +63,13 @@ window.onload = function () {
 </html>
 
 <?php
+include 'database_pw.php';
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 error_reporting(~0);
 
-$conn = mysqli_connect("localhost", "root", "!CLWOSafe123", "clwo_server");
 if (!$conn) {
     echo "Fehler: konnte nicht mit MySQL verbinden." . PHP_EOL;
     echo "Debug-Fehlernummer: " . mysqli_connect_errno() . PHP_EOL;
